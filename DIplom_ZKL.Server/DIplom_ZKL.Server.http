@@ -1,0 +1,6 @@
+@DIplom_ZKL.Server_HostAddress = http://localhost:5216
+
+GET {{DIplom_ZKL.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
