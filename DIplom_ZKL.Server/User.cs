@@ -22,5 +22,7 @@ public partial class User
 
     public int? Role { get; set; }
 
-    public bool? IsAdmin { get; set; }
+    public bool IsAdmin { get; set; } = false!;
+
+    public string? Telegramlogin { get; set; }
 }
