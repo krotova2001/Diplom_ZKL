@@ -9,11 +9,12 @@ import PasswordReset from '../pages/PasswordReset';
 export const useRoutes = () => {
     return (
         <Routes>
-            <Route index element={<Main />} />
-            <Route path="/" element={<Main />} />
+           
             <Route path="/login" element={<Login />} />
 
             <Route element={<PrivateRoute />}>
+                <Route index element={<Main />} />
+                <Route path="/" element={<Main />} />
                 <Route path='/admin' element={<Admin />} />
                 <Route path="/logout" element={<Logout />} />
                 <Route path="/passwordreset" element={<PasswordReset />} />

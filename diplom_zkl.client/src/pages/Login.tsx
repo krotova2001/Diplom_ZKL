@@ -162,7 +162,7 @@ export default function Login() {
                                 <Typography level="body-sm">
                                     New to company?{' '}
                                     <Link href="#replace-with-a-link" level="title-sm">
-                                        Sign up!
+                                        Зарегистрироваться!
                                     </Link>
                                 </Typography>
                             </Stack>
