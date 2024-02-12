@@ -1,13 +1,6 @@
 import { Link } from 'react-router-dom'
 import * as React from 'react';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import useAuth from "../hooks/useAuth";
-
-import { useColorScheme } from '@mui/joy/styles';
 import Box from '@mui/joy/Box';
 import Typography from '@mui/joy/Typography';
 import IconButton from '@mui/joy/IconButton';
@@ -25,8 +18,6 @@ import Drawer from '@mui/joy/Drawer';
 import ModalClose from '@mui/joy/ModalClose';
 import DialogTitle from '@mui/joy/DialogTitle';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
-import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import BookRoundedIcon from '@mui/icons-material/BookRounded';
 import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
@@ -35,11 +26,9 @@ import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
-import TeamNav from './Navigation';
+import TeamNav from './LeftBar';
 
-
-
-
+//верхняя полоска навигации
 function NavBar() {
     const [open, setOpen] = React.useState(false);
     const { isAuthenticated } = useAuth();
@@ -70,16 +59,19 @@ function NavBar() {
                     >
                         <LanguageRoundedIcon />
                     </IconButton>
+                    <Link to="/">
                     <Button
                         variant="plain"
                         color="neutral"
                         component="a"
-                        href="/"
+                        
                         size="sm"
                         sx={{ alignSelf: 'center' }}
                     >
                         Домой
                     </Button>
+                    </Link>
+                    <Link to="/admin">
                     <Button
                         variant="plain"
                         color="neutral"
@@ -89,18 +81,20 @@ function NavBar() {
                         size="sm"
                         sx={{ alignSelf: 'center' }}
                     >
-                        Панель администрирования
-                    </Button>
+                        Проекты
+                        </Button>
+                    </Link>
+                    <Link to="/logout">
                     <Button
                         variant="plain"
                         color="neutral"
                         component="a"
-                        href="/logout"
                         size="sm"
                         sx={{ alignSelf: 'center' }}
                     >
-                        Выход
-                    </Button>
+                        Задачи
+                        </Button>
+                    </Link>
                 </Stack>
                 <Box sx={{ display: { xs: 'inline-flex', sm: 'none' } }}>
                     <IconButton variant="plain" color="neutral" onClick={() => setOpen(true)}>
@@ -130,7 +124,7 @@ function NavBar() {
                     <Input
                         size="sm"
                         variant="outlined"
-                        placeholder="Search anything…"
+                        placeholder="Поиск..."
                         startDecorator={<SearchRoundedIcon color="primary" />}
                         endDecorator={
                             <IconButton
@@ -171,7 +165,7 @@ function NavBar() {
                             <BookRoundedIcon />
                         </IconButton>
                     </Tooltip>
-                  
+                 
                     <Dropdown>
                         <MenuButton
                             variant="plain"
@@ -219,11 +213,11 @@ function NavBar() {
                             <ListDivider />
                             <MenuItem>
                                 <HelpRoundedIcon />
-                                Help
+                                Помощь
                             </MenuItem>
                             <MenuItem>
                                 <SettingsRoundedIcon />
-                                Settings
+                                Настройки профиля
                             </MenuItem>
                             <ListDivider />
                             <MenuItem component="a" href="/blog/first-look-at-joy/">
@@ -232,16 +226,18 @@ function NavBar() {
                             </MenuItem>
                             <MenuItem
                                 component="a"
-                                href="https://github.com/mui/material-ui/tree/master/docs/data/joy/getting-started/templates/email"
+                                href="https://github.com/krotova2001/Diplom_ZKL"
                             >
-                                Sourcecode
+                                Этот проект на GitHub
                                 <OpenInNewRoundedIcon />
                             </MenuItem>
                             <ListDivider />
+                            <Link to="/logout">
                             <MenuItem>
                                 <LogoutRoundedIcon />
                                 Выйти
                             </MenuItem>
+                            </Link>
                         </Menu>
                     </Dropdown>
                 </Box>
