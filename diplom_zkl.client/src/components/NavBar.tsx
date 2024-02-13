@@ -71,7 +71,7 @@ function NavBar() {
                         Домой
                     </Button>
                     </Link>
-                    <Link to="/admin">
+                    <Link to="/projectlist">
                     <Button
                         variant="plain"
                         color="neutral"
@@ -84,7 +84,7 @@ function NavBar() {
                         Проекты
                         </Button>
                     </Link>
-                    <Link to="/logout">
+                    <Link to="/tasklist">
                     <Button
                         variant="plain"
                         color="neutral"
@@ -217,11 +217,13 @@ function NavBar() {
                             </MenuItem>
                             <MenuItem>
                                 <SettingsRoundedIcon />
-                                Настройки профиля
+                                <Link to='/user/about'>
+                                    Настройки профиля
+                                    </Link >
                             </MenuItem>
                             <ListDivider />
-                            <MenuItem component="a" href="/blog/first-look-at-joy/">
-                                First look at Joy UI
+                            <MenuItem component="a" href="mailto:zvuk24@gmail.com">
+                                Написать разработчикам
                                 <OpenInNewRoundedIcon />
                             </MenuItem>
                             <MenuItem

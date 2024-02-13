@@ -1,4 +1,4 @@
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Login.css' 
 import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
@@ -18,7 +18,7 @@ import Stack from '@mui/joy/Stack';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
-import GoogleIcon from "../components/GoogleIcon";
+import GoogleIcon from "../../components/GoogleIcon";
 import React from 'react';
 
 
@@ -200,8 +200,8 @@ export default function Login() {
                                     };
                                     setAuth(true);
                                     navigate(from, { replace: true })
-                                    //alert(JSON.stringify(data, null, 2))
-                                        ;
+                                    if (data.persistent) { console.log(data.persistent); localStorage.setItem('persistent', 'true' ) }
+                                    //alert(JSON.stringify(data, null, 2));
                                 }}
                             >
                                 <FormControl required>

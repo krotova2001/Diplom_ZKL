@@ -12,7 +12,7 @@ import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import AccountTreeRoundedIcon from '@mui/icons-material/AccountTreeRounded';
 import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
 
-//панель слева
+//РїР°РЅРµР»СЊ СЃР»РµРІР°
 export default function LeftBar() {
     return (
         <List
@@ -34,7 +34,7 @@ export default function LeftBar() {
                             <ListItemDecorator>
                                 <PeopleRoundedIcon fontSize="small" />
                             </ListItemDecorator>
-                            <ListItemContent>People</ListItemContent>
+                            <ListItemContent>РљРѕРјР°РЅРґР°</ListItemContent>
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
@@ -42,7 +42,7 @@ export default function LeftBar() {
                             <ListItemDecorator sx={{ color: 'neutral.500' }}>
                                 <AssignmentIndRoundedIcon fontSize="small" />
                             </ListItemDecorator>
-                            <ListItemContent>Настройки аккаунта</ListItemContent>
+                            <ListItemContent>РќР°СЃС‚СЂРѕР№РєРё Р°РєРєР°СѓРЅС‚Р°</ListItemContent>
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
@@ -50,7 +50,7 @@ export default function LeftBar() {
                             <ListItemDecorator sx={{ color: 'neutral.500' }}>
                                 <AccountTreeRoundedIcon fontSize="small" />
                             </ListItemDecorator>
-                            <ListItemContent>Проекты</ListItemContent>
+                            <ListItemContent>РџСЂРѕРµРєС‚С‹</ListItemContent>
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
@@ -58,7 +58,7 @@ export default function LeftBar() {
                             <ListItemDecorator sx={{ color: 'neutral.500' }}>
                                 <TodayRoundedIcon fontSize="small" />
                             </ListItemDecorator>
-                            <ListItemContent>Задачи</ListItemContent>
+                            <ListItemContent>Р—Р°РґР°С‡Рё</ListItemContent>
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
@@ -66,7 +66,7 @@ export default function LeftBar() {
                             <ListItemDecorator sx={{ color: 'neutral.500' }}>
                                 <ArticleRoundedIcon fontSize="small" />
                             </ListItemDecorator>
-                            <ListItemContent>Policies</ListItemContent>
+                            <ListItemContent>РџСЂР°РІРёР»Р°</ListItemContent>
                             <Chip variant="soft" color="warning" size="sm">
                                 2
                             </Chip>
