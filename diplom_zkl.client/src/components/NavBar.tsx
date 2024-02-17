@@ -39,6 +39,7 @@ function NavBar() {
                     display: 'flex',
                     flexGrow: 1,
                     justifyContent: 'space-between',
+                    margin: '10px',
                 }}
             >
                 <Stack
@@ -55,22 +56,24 @@ function NavBar() {
                         sx={{
                             display: { xs: 'none', sm: 'inline-flex' },
                             borderRadius: '50%',
+                          
                         }}
                     >
                         <LanguageRoundedIcon />
                     </IconButton>
-                    <Link to="/">
+
+                    <Link to="/home">
                     <Button
                         variant="plain"
                         color="neutral"
                         component="a"
-                        
                         size="sm"
                         sx={{ alignSelf: 'center' }}
                     >
                         Домой
                     </Button>
                     </Link>
+
                     <Link to="/projectlist">
                     <Button
                         variant="plain"
@@ -84,6 +87,7 @@ function NavBar() {
                         Проекты
                         </Button>
                     </Link>
+
                     <Link to="/tasklist">
                     <Button
                         variant="plain"
@@ -95,7 +99,34 @@ function NavBar() {
                         Задачи
                         </Button>
                     </Link>
+
+                    <Link to="/reports">
+                        <Button
+                            variant="plain"
+                            color="neutral"
+                            component="a"
+                            size="sm"
+                            sx={{ alignSelf: 'center' }}
+                        >
+                            Отчеты
+                        </Button>
+                    </Link>
+
+                    <Link to="/about">
+                        <Button
+                            variant="plain"
+                            color="neutral"
+                            component="a"
+                            size="sm"
+                            sx={{ alignSelf: 'center' }}
+                        >
+                            О проекте
+                        </Button>
+                    </Link>
+
                 </Stack>
+
+
                 <Box sx={{ display: { xs: 'inline-flex', sm: 'none' } }}>
                     <IconButton variant="plain" color="neutral" onClick={() => setOpen(true)}>
                         <MenuRoundedIcon />

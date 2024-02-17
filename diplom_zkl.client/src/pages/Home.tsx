@@ -1,14 +1,12 @@
-import LeftBar from "../components/LeftBar";
 import Root from "../components/Root";
 
-const Main = () => {
+const Home = () => {
     return (
         <><h1>Главная страница</h1>
-            <LeftBar />
             <Root />
             </>
        
     )
 }
 
-export default Main
+export default Home

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace DIplom_ZKL.Server;
 
@@ -25,4 +27,23 @@ public partial class User
     public bool IsAdmin { get; set; } = false!;
 
     public string? Telegramlogin { get; set; }
+}
+
+
+
+//данные, необходимые только для аутентификаци
+public class UserLoginData
+{
+    public required string Login { get; set; }
+    public required string Password { get; set; }
+}
+
+//настройки токена
+public class AuthOptions
+{
+    public const string ISSUER = "MyAuthServer"; // издатель токена
+    public const string AUDIENCE = "MyAuthClient"; // потребитель токена
+    const string KEY = "mysupersecret_secretsecretsecretkey!123";   // ключ для шифрации
+    public static SymmetricSecurityKey GetSymmetricSecurityKey() =>
+        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KEY));
 }

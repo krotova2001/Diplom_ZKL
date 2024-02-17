@@ -63,7 +63,7 @@ export default function UserAbout() {
                     <Box sx={{ mb: 1 }}>
                         <Typography level="title-md">Personal info</Typography>
                         <Typography level="body-sm">
-                            Customize how your profile information will apper to the networks.
+                        Настройте, как информация о вашем профиле будет отображаться в сети
                         </Typography>
                     </Box>
                     <Divider />
@@ -105,7 +105,7 @@ export default function UserAbout() {
                         </Stack>
                         <Stack spacing={2} sx={{ flexGrow: 1 }}>
                             <Stack spacing={1}>
-                                <FormLabel>Name</FormLabel>
+                                <FormLabel>Имя</FormLabel>
                                 <FormControl
                                     sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
                                 >
@@ -115,7 +115,7 @@ export default function UserAbout() {
                             </Stack>
                             <Stack direction="row" spacing={2}>
                                 <FormControl>
-                                    <FormLabel>Role</FormLabel>
+                                    <FormLabel>Роль</FormLabel>
                                     <Input size="sm" defaultValue="UI Developer" />
                                 </FormControl>
                                 <FormControl sx={{ flexGrow: 1 }}>
@@ -135,7 +135,7 @@ export default function UserAbout() {
                             </div>
                             <div>
                                 <FormControl sx={{ display: { sm: 'contents' } }}>
-                                    <FormLabel>Timezone</FormLabel>
+                                    <FormLabel>Часовой пояс</FormLabel>
                                     <Select
                                         size="sm"
                                         startDecorator={<AccessTimeFilledRoundedIcon />}
@@ -196,7 +196,7 @@ export default function UserAbout() {
                                 </IconButton>
                             </Stack>
                             <Stack spacing={1} sx={{ flexGrow: 1 }}>
-                                <FormLabel>Name</FormLabel>
+                                <FormLabel>Имя</FormLabel>
                                 <FormControl
                                     sx={{
                                         display: {
@@ -212,7 +212,7 @@ export default function UserAbout() {
                             </Stack>
                         </Stack>
                         <FormControl>
-                            <FormLabel>Role</FormLabel>
+                            <FormLabel>Роль</FormLabel>
                             <Input size="sm" defaultValue="UI Developer" />
                         </FormControl>
                         <FormControl sx={{ flexGrow: 1 }}>
@@ -231,7 +231,7 @@ export default function UserAbout() {
                         </div>
                         <div>
                             <FormControl sx={{ display: { sm: 'contents' } }}>
-                                <FormLabel>Timezone</FormLabel>
+                                <FormLabel>Часовой пояс</FormLabel>
                                 <Select
                                     size="sm"
                                     startDecorator={<AccessTimeFilledRoundedIcon />}
@@ -259,7 +259,7 @@ export default function UserAbout() {
                                 Cancel
                             </Button>
                             <Button size="sm" variant="solid">
-                                Save
+                                Сохранить
                             </Button>
                         </CardActions>
                     </CardOverflow>
@@ -268,7 +268,7 @@ export default function UserAbout() {
                     <Box sx={{ mb: 1 }}>
                         <Typography level="title-md">Bio</Typography>
                         <Typography level="body-sm">
-                            Write a short introduction to be displayed on your profile
+                            Создайте краткое описание вашего профиля.
                         </Typography>
                     </Box>
                     <Divider />
