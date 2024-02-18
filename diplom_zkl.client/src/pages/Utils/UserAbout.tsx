@@ -29,8 +29,10 @@ import DropZone from './DropZone';
 import FileUpload from './FileUpload';
 import CountrySelector from './CountrySelector';
 import EditorToolbar from './EditorToolbar';
+import AuthService from "../../services/auth.service";
 
 export default function UserAbout() {
+    const currentUser = AuthService.getCurrentUser();
     return (
         <Box sx={{ flex: 1, width: '100%' }}>
             <Box
@@ -61,7 +63,7 @@ export default function UserAbout() {
             >
                 <Card>
                     <Box sx={{ mb: 1 }}>
-                        <Typography level="title-md">Personal info</Typography>
+                        <Typography level="title-md">Обо мне</Typography>
                         <Typography level="body-sm">
                         Настройте, как информация о вашем профиле будет отображаться в сети
                         </Typography>
@@ -109,7 +111,7 @@ export default function UserAbout() {
                                 <FormControl
                                     sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
                                 >
-                                    <Input size="sm" placeholder="First name" />
+                                    <Input size="sm" placeholder="First name" defaultValue={ currentUser.email } />
                                     <Input size="sm" placeholder="Last name" sx={{ flexGrow: 1 }} />
                                 </FormControl>
                             </Stack>

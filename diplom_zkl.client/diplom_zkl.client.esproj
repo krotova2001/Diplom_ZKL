@@ -12,5 +12,6 @@
     <Folder Include="src\hooks\" />
     <Folder Include="src\context\" />
     <Folder Include="src\routes\" />
+    <Folder Include="src\services\" />
   </ItemGroup>
 </Project>

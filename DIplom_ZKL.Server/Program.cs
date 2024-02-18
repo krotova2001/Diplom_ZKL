@@ -13,9 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddCors(); // добавляем сервисы CORS
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+
 .AddJwtBearer(options =>
  {
      options.TokenValidationParameters = new TokenValidationParameters
@@ -54,6 +56,11 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// настраиваем CORS
+app.UseCors(builder => builder.WithOrigins("https://localhost:5000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod());
 
 
 app.MapControllers();

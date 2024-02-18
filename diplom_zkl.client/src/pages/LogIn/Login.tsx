@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import useAuth from '../../hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Login.css' 
@@ -20,7 +21,7 @@ import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
 import GoogleIcon from "../../components/GoogleIcon";
 import React from 'react';
-
+import AuthService from "../../services/auth.service";
 
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -198,15 +199,23 @@ export default function Login() {
                                         password: formElements.password.value,
                                         persistent: formElements.persistent.checked,
                                     };
-                                    setAuth(true);
-                                    navigate(from, { replace: true })
-                                    if (data.persistent) { console.log(data.persistent); localStorage.setItem('persistent', 'true' ) }
+                                    //тут подумать
+                                    AuthService.login(data.email, data.password).then(
+                                        () => {
+                                            if (data.persistent) { console.log(data.persistent); localStorage.setItem('persistent', 'true') }
+                                            setAuth(true);
+                                            navigate(from, { replace: true })
+                                        }
+                                    );
+                                   
+                                   
+                                   
                                     //alert(JSON.stringify(data, null, 2));
                                 }}
                             >
                                 <FormControl required>
                                     <FormLabel>Email</FormLabel>
-                                    <Input type="email" name="email" />
+                                    <Input type="text" name="email" />
                                 </FormControl>
                                 <FormControl required>
                                     <FormLabel>Пароль</FormLabel>
@@ -265,26 +274,3 @@ export default function Login() {
         </CssVarsProvider>
     );
 }
-
-
-/*
-const Login = () => {
-    const { setAuth } = useAuth()
-    const navigate = useNavigate()
-    const location = useLocation()
-    const from = location.state?.from?.pathname || '/'
-
-    return (
-       <>
-          
-            <div>Войдите в систему!!</div>
-            <button type={'button'} onClick={() => {
-                setAuth(true)
-                navigate(from, { replace: true });
-            }}>Войти</button>
-        </>   
-    )
-}
-
-export default Login
-*/
