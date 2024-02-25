@@ -6,17 +6,34 @@ type AuthContextType = {
     setAuth: (auth: boolean) => void; // функция для изменения значения isAuthenticated
 };
 
+//поискать, не залогинился ли пользователь раньше
+const FindIsLogin = () => {
+    if (sessionStorage.getItem('isLogin') == 'true') {
+        return true;
+    }
+    if (localStorage.getItem('persistent') == 'true') {
+        return true;
+    }
+    return false;
+
+}
+
+
 // Создаем контекст с типом AuthContextType и начальными значениями по умолчанию
 const AuthContext = createContext<AuthContextType>(
     {
-        isAuthenticated: localStorage.getItem('persistent')=='true'?true:false,
-        setAuth: () => {  },
+        isAuthenticated: FindIsLogin(),
+        setAuth: () => {
+
+        },
 });
+
+
 
 // Создаем компонент провайдера, который предоставляет данные контекста всем дочерним компонентам
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     // Используем хук useState для создания переменной isAuthenticated и функции setAuth для ее изменения
-    const [isAuthenticated, setAuth] = useState<boolean>(localStorage.getItem('persistent') == 'true' ? true : false);
+    const [isAuthenticated, setAuth] = useState<boolean>(FindIsLogin());
 
     // Возвращаем контекст провайдера, передавая значения isAuthenticated и setAuth в качестве значения контекста
     return (

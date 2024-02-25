@@ -15,7 +15,7 @@ import Typography from '@mui/joy/Typography';
 import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
-
+import Snackbar from '@mui/joy/Snackbar';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
@@ -36,6 +36,7 @@ import authService from '../../services/auth.service';
 
 
 export default function UserAbout() {
+    const [openSnackbar, setOpenSnackbar] = useState(false);
     const [CurrentUser, setcurrentUser] = useState<User>();
     const { register, handleSubmit, control } = useForm<User>(
         {
@@ -49,7 +50,10 @@ export default function UserAbout() {
     };
 
     function Save() {
-        authService.saveUser(CurrentUser?.id, CurrentUser);
+        authService.saveUser(CurrentUser?.id, CurrentUser).then((result)=>
+        {  if(result.status.toFixed(0) === "200"){
+            setOpenSnackbar(true);
+        }}).catch((error)=>{console.log(error)});
     }
 
     useEffect(() => {
@@ -66,6 +70,7 @@ export default function UserAbout() {
     }
 
         return (
+            <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ flex: 1, width: '100%' }}>
                     <Box
@@ -165,15 +170,21 @@ export default function UserAbout() {
                                         </FormControl>
                                         <FormControl sx={{ flexGrow: 1 }}>
                                             <FormLabel>Email</FormLabel>
+                                            <Controller
+                                                name="email"
+                                                control={control}
+                                                rules={{ required: false }}
+                                                render={({ field }) =>
                                             <Input
+                                            {...field}
                                                 size="sm"
                                                 type="email"
                                                 startDecorator={<EmailRoundedIcon />}
                                                 placeholder={CurrentUser?.email}
-                                                defaultValue={CurrentUser?.email}
-                                                {...register("email")}
+                                                value={CurrentUser?.email}
                                                 sx={{ flexGrow: 1 }}
-                                            />
+                                                onChange={onChangeHandler} />} />
+
                                         </FormControl>
                                     </Stack>
                                     <div>
@@ -206,8 +217,6 @@ export default function UserAbout() {
                                 </Stack>
                             </Stack>
 
-
-
                             <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
                                 <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
                                     <Button size="sm" variant="outlined" color="neutral">
@@ -221,7 +230,7 @@ export default function UserAbout() {
                         </Card>
                         <Card>
                             <Box sx={{ mb: 1 }}>
-                                <Typography level="title-md">Bio</Typography>
+                                <Typography level="title-md">Биография</Typography>
                                 <Typography level="body-sm">
                                     Создайте краткое описание вашего профиля.
                                 </Typography>
@@ -229,12 +238,20 @@ export default function UserAbout() {
                             <Divider />
                             <Stack spacing={2} sx={{ my: 1 }}>
                                 <EditorToolbar />
+                                <Controller
+                                                name="biography"
+                                                control={control}
+                                                rules={{ required: false }}
+                                                render={({ field }) =>
                                 <Textarea
+                                {...field}
                                     size="sm"
                                     minRows={4}
                                     sx={{ mt: 1.5 }}
-                                    value={CurrentUser?.Biography}
-                                    {...register("Biography")}
+                                    value={CurrentUser?.biography}
+                                    onChange={onChangeHandler} />}
+
+                                   
                                 />
                                 <FormHelperText sx={{ mt: 0.75, fontSize: 'xs' }}>
                                     275 characters left
@@ -243,21 +260,20 @@ export default function UserAbout() {
                             <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
                                 <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
                                     <Button size="sm" variant="outlined" color="neutral">
-                                        Cancel
+                                        Отмена
                                     </Button>
-                                    <Button size="sm" variant="solid">
-                                        Save
+                                    <Button size="sm" variant="solid" onClick={Save}>
+                                        Сохранить
                                     </Button>
                                 </CardActions>
                             </CardOverflow>
                         </Card>
 
                         <Card>
-
                             <Box sx={{ mb: 1 }}>
                                 <Typography level="title-md">Портфолио проектов</Typography>
                                 <Typography level="body-sm">
-                                    Share a few snippets of your work.
+                                    Поделиться примерами своих работ
                                 </Typography>
                             </Box>
                             <Divider />
@@ -291,5 +307,15 @@ export default function UserAbout() {
 
                 </Box>
             </form>
+            <Snackbar 
+               variant="soft"
+               color="success"
+               open={openSnackbar}
+               onClose={() => setOpenSnackbar(false)}
+               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+               autoHideDuration={3000}>
+               Изменения сохранены
+               </Snackbar>
+            </>
         );
     }
