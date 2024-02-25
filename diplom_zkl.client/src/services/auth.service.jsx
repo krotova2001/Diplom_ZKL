@@ -40,7 +40,7 @@ class AuthService {
 
     saveUser(id, user) {
         console.log(user);
-        return axios.put(Endpoints.API_URL + "users/" + id, {user} , { headers: authHeader() });  
+        return axios.put(Endpoints.API_URL + "users/" + id, { user }.user, { headers: authHeader() });  
     }
 }
 
