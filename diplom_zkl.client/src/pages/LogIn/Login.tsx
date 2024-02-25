@@ -22,6 +22,7 @@ import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
 import GoogleIcon from "../../components/GoogleIcon";
 import React from 'react';
 import AuthService from "../../services/auth.service";
+import User from "../../models/user.model";
 
 
 interface FormElements extends HTMLFormControlsCollection {

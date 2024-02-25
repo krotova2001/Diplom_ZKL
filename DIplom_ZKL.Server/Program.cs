@@ -58,7 +58,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // настраиваем CORS
-app.UseCors(builder => builder.WithOrigins("https://localhost:5000")
+app.UseCors(builder => builder.AllowAnyOrigin()
                             .AllowAnyHeader()
                             .AllowAnyMethod());
 

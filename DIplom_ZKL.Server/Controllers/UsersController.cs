@@ -55,11 +55,24 @@ namespace DIplom_ZKL.Server.Controllers
         //обновить информацию о пользователе
         [Authorize]
         [HttpPut("{id}")]
-        public IResult Put(Guid id, [FromBody] string value)
+        public IResult Put(Guid id, User value)
         {
-            //тут придумать валидацию на null и некорректные данные
-
-            return Results.Ok();
+            //тут продумать нормально
+            var result = _context.Users.SingleOrDefault(p => p.Id == id);   
+            if (result != null)
+            {
+                //result = value - такая шняга тут не проходит, не сохраняет так
+                result.Telegramlogin = value.Telegramlogin;
+                result.Email = value.Email;
+                result.Surname = value.Surname;
+                result.Name = value.Name;
+                result.Biography = value.Biography;
+                result.TimeZone = value.TimeZone;
+                _context.SaveChanges();
+                return Results.Ok();
+            }
+            else
+                return Results.NotFound();
         }
 
         // удалить пользователя

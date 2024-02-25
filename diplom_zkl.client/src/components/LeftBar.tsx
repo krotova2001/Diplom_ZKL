@@ -1,4 +1,4 @@
-import * as React from 'react';
+import useAuth from "../hooks/useAuth";
 import Chip from '@mui/joy/Chip';
 import List from '@mui/joy/List';
 import ListSubheader from '@mui/joy/ListSubheader';
@@ -14,66 +14,71 @@ import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
 
 //панель слева
 export default function LeftBar() {
-    return (
-        <List
-            size="sm"
-            sx={{ '--ListItem-radius': 'var(--joy-radius-sm)', '--List-gap': '4px' }}
-        >
-            <ListItem nested>
-                <ListSubheader sx={{ letterSpacing: '2px', fontWeight: '800' }}>
-                    Browse
-                </ListSubheader>
-                <List
-                    aria-labelledby="nav-list-browse"
-                    sx={{
-                        '& .JoyListItemButton-root': { p: '8px' },
-                    }}
-                >
-                    <ListItem>
-                        <ListItemButton selected>
-                            <ListItemDecorator>
-                                <PeopleRoundedIcon fontSize="small" />
-                            </ListItemDecorator>
-                            <ListItemContent>Команда</ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemButton>
-                            <ListItemDecorator sx={{ color: 'neutral.500' }}>
-                                <AssignmentIndRoundedIcon fontSize="small" />
-                            </ListItemDecorator>
-                            <ListItemContent>Настройки аккаунта</ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemButton>
-                            <ListItemDecorator sx={{ color: 'neutral.500' }}>
-                                <AccountTreeRoundedIcon fontSize="small" />
-                            </ListItemDecorator>
-                            <ListItemContent>Проекты</ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemButton>
-                            <ListItemDecorator sx={{ color: 'neutral.500' }}>
-                                <TodayRoundedIcon fontSize="small" />
-                            </ListItemDecorator>
-                            <ListItemContent>Задачи</ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemButton>
-                            <ListItemDecorator sx={{ color: 'neutral.500' }}>
-                                <ArticleRoundedIcon fontSize="small" />
-                            </ListItemDecorator>
-                            <ListItemContent>Правила</ListItemContent>
-                            <Chip variant="soft" color="warning" size="sm">
-                                2
-                            </Chip>
-                        </ListItemButton>
-                    </ListItem>
-                </List>
-            </ListItem>
-        </List>
-    );
+    const { isAuthenticated } = useAuth();
+    if (isAuthenticated == true) {
+        return (
+            <List
+                size="sm"
+                sx={{ '--ListItem-radius': 'var(--joy-radius-sm)', '--List-gap': '4px' }}
+            >
+                <ListItem nested>
+                    <ListSubheader sx={{ letterSpacing: '2px', fontWeight: '800' }}>
+                        Browse
+                    </ListSubheader>
+                    <List
+                        aria-labelledby="nav-list-browse"
+                        sx={{
+                            '& .JoyListItemButton-root': { p: '8px' },
+                        }}
+                    >
+                        <ListItem>
+                            <ListItemButton selected>
+                                <ListItemDecorator>
+                                    <PeopleRoundedIcon fontSize="small" />
+                                </ListItemDecorator>
+                                <ListItemContent>Команда</ListItemContent>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemButton>
+                                <ListItemDecorator sx={{ color: 'neutral.500' }}>
+                                    <AssignmentIndRoundedIcon fontSize="small" />
+                                </ListItemDecorator>
+                                <ListItemContent>Настройки аккаунта</ListItemContent>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemButton>
+                                <ListItemDecorator sx={{ color: 'neutral.500' }}>
+                                    <AccountTreeRoundedIcon fontSize="small" />
+                                </ListItemDecorator>
+                                <ListItemContent>Проекты</ListItemContent>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemButton>
+                                <ListItemDecorator sx={{ color: 'neutral.500' }}>
+                                    <TodayRoundedIcon fontSize="small" />
+                                </ListItemDecorator>
+                                <ListItemContent>Задачи</ListItemContent>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemButton>
+                                <ListItemDecorator sx={{ color: 'neutral.500' }}>
+                                    <ArticleRoundedIcon fontSize="small" />
+                                </ListItemDecorator>
+                                <ListItemContent>Правила</ListItemContent>
+                                <Chip variant="soft" color="warning" size="sm">
+                                    2
+                                </Chip>
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </ListItem>
+            </List>
+        );
+    }
+    else
+        return (<></>);
 }

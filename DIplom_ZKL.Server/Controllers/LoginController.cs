@@ -39,7 +39,8 @@ namespace DIplom_ZKL.Server.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                username = person.Login
+                username = person.Login,
+                id = person.Id
             };
             return Results.Json(response);
         }
