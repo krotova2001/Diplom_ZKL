@@ -36,11 +36,10 @@ import authService from '../../services/auth.service';
 
 
 export default function UserAbout() {
-    const changedUser = new User();
-    const [CurrentUser, setcurrentUser] = useState<User | null>(null);
+    const [CurrentUser, setcurrentUser] = useState<User>();
     const {register, handleSubmit, control} = useForm<User>(
         {
-            defaultValues: changedUser
+            defaultValues: CurrentUser
         }
     );
     const onSubmit: SubmitHandler<User> = (newUser) =>  {
@@ -57,8 +56,8 @@ export default function UserAbout() {
 
     const onChangeHandler = (e: { target: { name: string; value: string; }; }) => {
         const { name, value } = e.target;
-        //setcurrentUser(changedUser=> {...changedUser, name: value});
-      };
+        setcurrentUser((prev) => ({prev, [name]: value}));
+      
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -138,11 +137,11 @@ export default function UserAbout() {
                             <Stack spacing={1}>
                                 <FormLabel>Имя</FormLabel>
                                 <FormControl sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}>
-                                <Controller
-                                 name="name"
-                                 control={control}
-                                 rules={{ required: true }}
-                                 render={({ field }) => <Input {...field} size="sm" placeholder={CurrentUser?.name} defaultValue={CurrentUser?.name}  />} />
+                                        <Controller
+                                            name="name"
+                                            control={control}
+                                            rules={{ required: true }}
+                                            render={({ field }) => <Input {...field} size="sm" placeholder={CurrentUser?.name} value={CurrentUser?.name} onChange={onChangeHandler} />} />
                                  
                                  <Input size="sm" placeholder={CurrentUser?.surname} sx={{ flexGrow: 1 }} defaultValue={CurrentUser?.surname}   {...register("surname")}/>
                                 </FormControl>
