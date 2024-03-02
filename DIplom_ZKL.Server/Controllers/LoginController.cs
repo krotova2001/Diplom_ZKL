@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using static DIplom_ZKL.Server.User;
 
 namespace DIplom_ZKL.Server.Controllers
 {
