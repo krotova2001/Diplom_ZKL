@@ -144,7 +144,11 @@ export default function UserAbout() {
                                             top: 170,
                                             boxShadow: 'sm',
                                         }}
-                                    >
+                                        >
+                                            <input
+                                                type="file"
+                                                hidden
+                                            />
                                         <EditRoundedIcon />
                                     </IconButton>
                                 </Stack>
