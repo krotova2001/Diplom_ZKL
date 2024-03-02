@@ -18,6 +18,15 @@ class UserService {
     getAdminBoard() {
         return axios.get(Endpoints.API_URL + 'admin', { headers: authHeader() });
     }
+ 
+    //загрузи фото пользователя
+    uploadUserPhoto(file, onUploadProgress) {
+        let formData = new FormData();
+        formData.append("file", file);
+
+        return axios.post(Endpoints.API_URL+'user'+'/uploadphoto', formData, {headers: authHeader(),
+            "Content-Type": "multipart/form-data", onUploadProgress: onUploadProgress});
+    }
 }
 
 export default new UserService();

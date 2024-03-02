@@ -32,12 +32,16 @@ import CountrySelector from './CountrySelector';
 import EditorToolbar from './EditorToolbar';
 import { User } from '../../models/user';
 import authService from '../../services/auth.service';
+import userService from '../../services/user.service';
 
 
 
 export default function UserAbout() {
-    const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [CurrentUser, setcurrentUser] = useState<User>();
+    const [openSnackbar, setOpenSnackbar] = useState(false); //всплывашка справа
+    const [CurrentUser, setcurrentUser] = useState<User>(); //текущий пользователь
+    const [Photo, setPhoto] = useState(); // фото пользователя для замены
+
+    
     const { register, handleSubmit, control } = useForm<User>(
         {
             defaultValues: CurrentUser
