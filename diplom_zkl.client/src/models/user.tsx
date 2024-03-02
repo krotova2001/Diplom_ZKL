@@ -12,4 +12,5 @@ export class User {
     Biography: string | undefined;
     Country: string | undefined;
     TimeZone: number | undefined;
+    
 }

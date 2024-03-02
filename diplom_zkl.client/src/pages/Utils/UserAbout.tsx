@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
@@ -16,18 +17,12 @@ import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Snackbar from '@mui/joy/Snackbar';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRounded';
-import VideocamRoundedIcon from '@mui/icons-material/VideocamRounded';
-import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useForm, SubmitHandler, Controller, set } from "react-hook-form";
-import DropZone from './DropZone';
-import FileUpload from './FileUpload';
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import CountrySelector from './CountrySelector';
 import EditorToolbar from './EditorToolbar';
 import { User } from '../../models/user';
@@ -35,14 +30,14 @@ import authService from '../../services/auth.service';
 import userService from '../../services/user.service';
 
 
-
 export default function UserAbout() {
     const [openSnackbar, setOpenSnackbar] = useState(false); //всплывашка справа
     const [CurrentUser, setcurrentUser] = useState<User>(); //текущий пользователь
     const [Photo, setPhoto] = useState(); // фото пользователя для замены
+    const [selectedImage, setSelectedImage] = useState<File>();
 
     
-    const { register, handleSubmit, control } = useForm<User>(
+    const { handleSubmit, control } = useForm<User>(
         {
             defaultValues: CurrentUser
         }
@@ -72,6 +67,15 @@ export default function UserAbout() {
         setcurrentUser(tempUser);
         console.log(tempUser);
     }
+
+    const handleFile = (event: { target: { files: (string | Blob)[]; }; }) => {
+        setSelectedImage(
+            URL.createObjectURL(event.target.files?.[0])
+        );
+        const formData = new FormData();
+        formData.append("fileupload", event.target.files[0]);
+
+    };
 
         return (
             <>
@@ -124,33 +128,39 @@ export default function UserAbout() {
                                         sx={{ flex: 1, minWidth: 120, borderRadius: '100%' }}
                                     >
                                         <img
-                                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-                                            srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
+                                            src={URL.createObjectURL(selectedImage)}
                                             loading="lazy"
-                                            alt=""
+                                            alt="У вас не загружено фото"
                                         />
-                                    </AspectRatio>
-                                    <IconButton
-                                        aria-label="upload new picture"
-                                        size="sm"
-                                        variant="outlined"
-                                        color="neutral"
-                                        sx={{
-                                            bgcolor: 'background.body',
-                                            position: 'absolute',
-                                            zIndex: 2,
-                                            borderRadius: '50%',
-                                            left: 100,
-                                            top: 170,
-                                            boxShadow: 'sm',
-                                        }}
-                                        >
-                                            <input
-                                                type="file"
-                                                hidden
-                                            />
-                                        <EditRoundedIcon />
-                                    </IconButton>
+                                        </AspectRatio>
+
+                                       
+                                        <input accept="image/*" id="icon-button-file"
+                                            type="file" style={{ display: 'none' }} onChange={(event) => {
+                                                console.log(event.target.files?.[0]);
+                                                setSelectedImage(event.target.files?.[0]);
+                                            }} />
+                                        <label htmlFor="icon-button-file">
+                                            <IconButton color="primary" aria-label="upload picture"
+                                                sx={{
+                                                    bgcolor: 'background.body',
+                                                    position: 'absolute',
+                                                    zIndex: 2,
+                                                    borderRadius: '50%',
+                                                    left: 100,
+                                                    top: 170,
+                                                    boxShadow: 'sm',
+                                                }}
+                                                size="sm"
+                                                variant="outlined"
+                                                component="span">
+                                                <EditRoundedIcon />
+                                            </IconButton>
+                                        </label>
+                                       
+                                           
+                                     
+                                       
                                 </Stack>
                                 <Stack spacing={2} sx={{ flexGrow: 1 }}>
                                     <Stack spacing={1}>
@@ -277,40 +287,7 @@ export default function UserAbout() {
                             </CardOverflow>
                         </Card>
 
-                        <Card>
-                            <Box sx={{ mb: 1 }}>
-                                <Typography level="title-md">Портфолио проектов</Typography>
-                                <Typography level="body-sm">
-                                    Поделиться примерами своих работ
-                                </Typography>
-                            </Box>
-                            <Divider />
-                            <Stack spacing={2} sx={{ my: 1 }}>
-                                <DropZone />
-                                <FileUpload
-                                    icon={<InsertDriveFileRoundedIcon />}
-                                    fileName="Tech design requirements.pdf"
-                                    fileSize="200 kB"
-                                    progress={100}
-                                />
-                                <FileUpload
-                                    icon={<VideocamRoundedIcon />}
-                                    fileName="Dashboard prototype recording.mp4"
-                                    fileSize="16 MB"
-                                    progress={40}
-                                />
-                            </Stack>
-                            <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
-                                <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
-                                    <Button size="sm" variant="outlined" color="neutral">
-                                        Отмена
-                                    </Button>
-                                    <Button size="sm" variant="solid">
-                                        Сохранить
-                                    </Button>
-                                </CardActions>
-                            </CardOverflow>
-                        </Card>
+                    
                     </Stack>
 
                 </Box>
