@@ -33,7 +33,6 @@ import userService from '../../services/user.service';
 export default function UserAbout() {
     const [openSnackbar, setOpenSnackbar] = useState(false); //всплывашка справа
     const [CurrentUser, setcurrentUser] = useState<User>(); //текущий пользователь
-    const [Photo, setPhoto] = useState(); // фото пользователя для замены
     const [selectedImage, setSelectedImage] = useState<File>();
 
     
@@ -48,6 +47,7 @@ export default function UserAbout() {
         //authService.saveUser(CurrentUser?.id, CurrentUser);
     };
 
+    //сохранить изменения
     function Save() {
         authService.saveUser(CurrentUser?.id, CurrentUser).then((result)=>
         {  if(result.status.toFixed(0) === "200"){
@@ -55,12 +55,17 @@ export default function UserAbout() {
         }}).catch((error)=>{console.log(error)});
     }
 
+    //загрузить текущего юзера на страницу
     useEffect(() => {
         authService.getCurrentUser().then(user => {
+            if (selectedImage==undefined)
+            {
             setcurrentUser(user.data);
+            }
         });
     }, []);
 
+    //записать свойство в объект юзера
     const onChangeHandler = (e: { target: { name: string; value: string; }; }) => {
         const { name, value } = e.target;
         const tempUser: User = { ...CurrentUser, [name]: value } as User;
@@ -68,13 +73,10 @@ export default function UserAbout() {
         console.log(tempUser);
     }
 
-    const handleFile = (event: { target: { files: (string | Blob)[]; }; }) => {
-        setSelectedImage(
-            URL.createObjectURL(event.target.files?.[0])
-        );
+    const handleFile = (event: File | undefined) => {
         const formData = new FormData();
-        formData.append("fileupload", event.target.files[0]);
-
+        let file = URL.createObjectURL(event as File);
+        formData.append("fileupload", file);
     };
 
         return (
@@ -128,7 +130,7 @@ export default function UserAbout() {
                                         sx={{ flex: 1, minWidth: 120, borderRadius: '100%' }}
                                     >
                                         <img
-                                            src={URL.createObjectURL(selectedImage)}
+                                            src={selectedImage!=undefined?URL.createObjectURL(selectedImage):CurrentUser?.picture}
                                             loading="lazy"
                                             alt="У вас не загружено фото"
                                         />
@@ -139,6 +141,7 @@ export default function UserAbout() {
                                             type="file" style={{ display: 'none' }} onChange={(event) => {
                                                 console.log(event.target.files?.[0]);
                                                 setSelectedImage(event.target.files?.[0]);
+                                                handleFile(event.target.files?.[0]);
                                             }} />
                                         <label htmlFor="icon-button-file">
                                             <IconButton color="primary" aria-label="upload picture"
