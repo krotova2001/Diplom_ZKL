@@ -23,8 +23,7 @@ class UserService {
     uploadUserPhoto(file, onUploadProgress) {
         let formData = new FormData();
         formData.append("file", file);
-
-        return axios.post(Endpoints.API_URL+'user'+'/uploadphoto', formData, {headers: authHeader(),
+        return axios.post(Endpoints.API_URL + 'users/uploadphoto/'+`${JSON.parse(localStorage.getItem('userInfo')).id}`, formData, {headers: authHeader(),
             "Content-Type": "multipart/form-data", onUploadProgress: onUploadProgress});
     }
 }

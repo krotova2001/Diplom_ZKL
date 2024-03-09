@@ -23,6 +23,7 @@ public partial class User
     public string Email { get; set; } = null!;
 
     public byte[]? Picture { get; set; }
+    public string PictureUrl { get; set; } = null!;
 
     public int? Role { get; set; }
 

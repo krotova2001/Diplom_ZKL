@@ -5,7 +5,7 @@ export class User {
     surname: string | undefined;
     email: string | undefined;
     token: string | undefined;
-    picture: string | undefined;
+    pictureUrl: string | undefined;
     role:number | undefined;
     IsAdmin:number | undefined;
     telegramlogin: string | undefined;

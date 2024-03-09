@@ -3,7 +3,7 @@ import LeftBar from './components/LeftBar';
 import NavBar from './components/NavBar';
 import useRoutes from './routes/routes';
 
-//визуальный шаблон - главная страница.
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 const App = () => {
     const routes = useRoutes();
  

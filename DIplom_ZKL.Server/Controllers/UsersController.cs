@@ -6,6 +6,9 @@ using System.Security.Claims;
 using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Linq;
+using System.Net;
+using NuGet.Packaging.Signing;
+using Microsoft.AspNetCore.Hosting;
 
 namespace DIplom_ZKL.Server.Controllers
 {
@@ -51,7 +54,31 @@ namespace DIplom_ZKL.Server.Controllers
             _context.SaveChanges();
             return Results.Json(newUser);
         }
-        
+
+        //загрузить новое фото пользователя
+        [Authorize]
+        [HttpPost("uploadphoto/{id}")]
+        public async Task<HttpResponseMessage> PostUserImage(Guid id)
+        {
+            var idd = HttpContext.User.Identity;
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            try
+            {
+                var httpRequest = HttpContext.Request;
+                var postedFile = httpRequest.Form.Files;
+                if (postedFile != null && postedFile[0].Length > 0)
+                {
+                    string serverFolder = Path.Combine("", $"photo_{id}.jpg");
+                    await postedFile[0].CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                }
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotModified);
+            }
+        }
+
         //обновить информацию о пользователе
         [Authorize]
         [HttpPut("{id}")]
@@ -68,6 +95,7 @@ namespace DIplom_ZKL.Server.Controllers
                 result.Name = value.Name;
                 result.Biography = value.Biography;
                 result.TimeZone = value.TimeZone;
+                result.PictureUrl = @$"/wwwroot/photo_{result.Id}.jpg";
                 _context.SaveChanges();
                 return Results.Ok();
             }

@@ -25,13 +25,24 @@ import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-
 import TeamNav from './LeftBar';
+import Endpoints from "../services/endpoints";
+import { useEffect, useState } from 'react';
+import authService from '../services/auth.service';
+import { User } from '../models/user';
 
 //верхняя полоска навигации
 function NavBar() {
     const [open, setOpen] = React.useState(false);
     const { isAuthenticated } = useAuth();
+    const [CurrentUser, setcurrentUser] = useState<User>(); //текущий пользователь
+
+    useEffect(() => {
+        authService.getCurrentUser().then(user => {
+            setcurrentUser(user.data);
+        });
+    }, []);
+
     if (isAuthenticated == true) {
         return (
             <Box
@@ -204,8 +215,7 @@ function NavBar() {
                             sx={{ maxWidth: '32px', maxHeight: '32px', borderRadius: '9999999px' }}
                         >
                             <Avatar
-                                src="https://i.pravatar.cc/40?img=2"
-                                srcSet="https://i.pravatar.cc/80?img=2"
+                                src={Endpoints.API_URL + CurrentUser?.pictureUrl}
                                 sx={{ maxWidth: '32px', maxHeight: '32px' }}
                             />
                         </MenuButton>
@@ -227,16 +237,15 @@ function NavBar() {
                                     }}
                                 >
                                     <Avatar
-                                        src="https://i.pravatar.cc/40?img=2"
-                                        srcSet="https://i.pravatar.cc/80?img=2"
+                                        src={Endpoints.API_URL + CurrentUser?.pictureUrl}
                                         sx={{ borderRadius: '50%' }}
                                     />
                                     <Box sx={{ ml: 1.5 }}>
                                         <Typography level="title-sm" textColor="text.primary">
-                                            Rick Sanchez
+                                            {CurrentUser?.name +' ' + CurrentUser?.surname}
                                         </Typography>
                                         <Typography level="body-xs" textColor="text.tertiary">
-                                            rick@email.com
+                                            { CurrentUser?.email }
                                         </Typography>
                                     </Box>
                                 </Box>
