@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using System.Net;
 using NuGet.Packaging.Signing;
 using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace DIplom_ZKL.Server.Controllers
 {
@@ -18,11 +19,13 @@ namespace DIplom_ZKL.Server.Controllers
     {
         private readonly ILogger<UsersController> _logger;
         private readonly DiplomContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public UsersController(ILogger<UsersController> logger)
+        public UsersController(ILogger<UsersController> logger, IWebHostEnvironment env)
         {
             _logger = logger;
             _context = new DiplomContext();
+            _env = env; // окружение, чтоб иметь досутп к путям на диске и сохранять файлы
         }
        
         [Authorize]
@@ -56,27 +59,36 @@ namespace DIplom_ZKL.Server.Controllers
         }
 
         //загрузить новое фото пользователя
-        [Authorize]
-        [HttpPost("uploadphoto/{id}")]
-        public async Task<HttpResponseMessage> PostUserImage(Guid id)
+        
+        [HttpPost("uploadphoto")]
+        public async Task<HttpResponseMessage> PostUserImage(IFormFile file)
         {
-            var idd = HttpContext.User.Identity;
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            try
+            Guid userid = Guid.Parse(HttpContext.Request.Form["id"]);
+            var user = _context.Users.SingleOrDefault(p => p.Id == userid);
+            if (user != null)
             {
-                var httpRequest = HttpContext.Request;
-                var postedFile = httpRequest.Form.Files;
-                if (postedFile != null && postedFile[0].Length > 0)
+                try
                 {
-                    string serverFolder = Path.Combine("", $"photo_{id}.jpg");
-                    await postedFile[0].CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                    if (file != null)
+                    {
+                        string serverFolder = @$"userphotos\photo_{userid}.jpg";
+                        //user.PictureUrl = serverFolder;
+                        //_context.SaveChanges();
+                        await file.CopyToAsync(new FileStream(Path.Combine(_env.WebRootPath, serverFolder), FileMode.Create));
+
+                        return new HttpResponseMessage(HttpStatusCode.OK);
+                    }
+                    else
+                    {
+                        return new HttpResponseMessage(HttpStatusCode.NotModified);
+                    }
                 }
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                catch
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotModified);
+                }
             }
-            catch (Exception ex)
-            {
-                return new HttpResponseMessage(HttpStatusCode.NotModified);
-            }
+            else { return new HttpResponseMessage(HttpStatusCode.NotModified);}
         }
 
         //обновить информацию о пользователе
@@ -95,7 +107,6 @@ namespace DIplom_ZKL.Server.Controllers
                 result.Name = value.Name;
                 result.Biography = value.Biography;
                 result.TimeZone = value.TimeZone;
-                result.PictureUrl = @$"/wwwroot/photo_{result.Id}.jpg";
                 _context.SaveChanges();
                 return Results.Ok();
             }

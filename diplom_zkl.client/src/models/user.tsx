@@ -9,8 +9,7 @@ export class User {
     role:number | undefined;
     IsAdmin:number | undefined;
     telegramlogin: string | undefined;
-    Biography: string | undefined;
+    biography: string | undefined;
     Country: string | undefined;
     TimeZone: number | undefined;
-    
 }

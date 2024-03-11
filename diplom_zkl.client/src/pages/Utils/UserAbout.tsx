@@ -53,9 +53,8 @@ export default function UserAbout() {
                 setOpenSnackbar(true);
             }
         }).catch((error) => { console.log(error) });
-
         if (selectedImage != undefined) {
-            handleFile(selectedImage);
+            UserService.uploadUserPhoto(selectedImage);
         }
     }
 
@@ -77,12 +76,6 @@ export default function UserAbout() {
         console.log(tempUser);
 
     }
-
-    //выбрать новое фото
-    const handleFile = (event: File | undefined) => {
-        let file = URL.createObjectURL(event as File);
-        UserService.uploadUserPhoto(file)
-        };
 
         return (
             <>
