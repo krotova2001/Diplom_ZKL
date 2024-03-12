@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import * as React from 'react';
 import useAuth from "../hooks/useAuth";
 import Box from '@mui/joy/Box';
@@ -30,6 +30,24 @@ import Endpoints from "../services/endpoints";
 import { useEffect, useState } from 'react';
 import authService from '../services/auth.service';
 import { User } from '../models/user';
+
+//доп ссылка для админов
+function adminPanelLink() {
+    if(true){
+
+        return (  <MenuItem>
+            <SettingsRoundedIcon />
+            <NavLink to='/admin'>
+                Панель администратора
+                </NavLink >
+        </MenuItem>)
+    }
+    else{
+        return <> </>;
+    
+    }
+    
+}
 
 //верхняя полоска навигации
 function NavBar() {
@@ -257,10 +275,11 @@ function NavBar() {
                             </MenuItem>
                             <MenuItem>
                                 <SettingsRoundedIcon />
-                                <Link to='/user/about'>
+                                <NavLink to='/user/about'>
                                     Настройки профиля
-                                    </Link >
+                                    </NavLink >
                             </MenuItem>
+                            {adminPanelLink()}
                             <ListDivider />
                             <MenuItem component="a" href="mailto:zvuk24@gmail.com">
                                 Написать разработчикам

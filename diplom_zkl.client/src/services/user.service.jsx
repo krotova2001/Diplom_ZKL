@@ -18,8 +18,12 @@ class UserService {
     getAdminBoard() {
         return axios.get(Endpoints.API_URL + 'admin', { headers: authHeader() });
     }
+
+    getAllUsers() {
+        return axios.get(Endpoints.API_URL + 'users', { headers: authHeader() });
+    }
  
-    //загрузи фото пользователя
+    //загрузить фото пользователя
     uploadUserPhoto(file) {
         let formData = new FormData();
         formData.append('id', `${JSON.parse(localStorage.getItem('userInfo')).id}`);
