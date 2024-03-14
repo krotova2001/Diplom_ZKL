@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DIplom_ZKL.Server;
+namespace DIplom_ZKL.Server.Models;
 
 /// <summary>
 /// Задача
