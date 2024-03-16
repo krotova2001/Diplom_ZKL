@@ -52,6 +52,7 @@ namespace DIplom_ZKL.Server.Controllers
         [HttpPost]
         public IResult CreateUser([FromBody] User newUser)
         {
+            newUser.Id = new Guid();
             //тут придумать валидацию на null и некорректные данные
             _context.Users.Add(newUser);
             _context.SaveChanges();

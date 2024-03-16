@@ -13,3 +13,9 @@ export class User {
     Country: string | undefined;
     TimeZone: number | undefined;
 }
+
+export class NewUser extends User {
+    password: string | undefined;
+    login: string | undefined;
+    pictureUrl = "";
+}
