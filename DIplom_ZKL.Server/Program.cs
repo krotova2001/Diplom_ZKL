@@ -1,11 +1,10 @@
-using DIplom_ZKL.Server;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using static DIplom_ZKL.Server.User;
+using static DIplom_ZKL.Server.Models.User;
 
 
 var builder = WebApplication.CreateBuilder(args);

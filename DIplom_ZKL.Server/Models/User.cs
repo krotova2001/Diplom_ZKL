@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DIplom_ZKL.Server;
+namespace DIplom_ZKL.Server.Models;
 
 /// <summary>
 /// Пользователи системы

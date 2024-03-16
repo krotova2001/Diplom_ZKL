@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DIplom_ZKL.Server.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DIplom_ZKL.Server;

@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DIplom_ZKL.Server.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using static DIplom_ZKL.Server.User;
+using static DIplom_ZKL.Server.Models.User;
 
 namespace DIplom_ZKL.Server.Controllers
 {
