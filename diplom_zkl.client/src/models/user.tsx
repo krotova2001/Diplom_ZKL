@@ -1,13 +1,13 @@
 //класс пользователя
 export class User {
-    id: string | undefined;
+    id!: string;
     name: string | undefined;
     surname: string | undefined;
     email: string | undefined;
     token: string | undefined;
     pictureUrl: string | undefined;
     role:number | undefined;
-    IsAdmin:number | undefined;
+    IsAdmin!:number;
     telegramlogin: string | undefined;
     biography: string | undefined;
     Country: string | undefined;
@@ -15,7 +15,7 @@ export class User {
 }
 
 export class NewUser extends User {
-    password: string | undefined;
-    login: string | undefined;
+    password!: string;
+    login!: string;
     pictureUrl = "";
 }
