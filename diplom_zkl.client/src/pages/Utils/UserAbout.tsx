@@ -177,7 +177,6 @@ export default function UserAbout() {
                                                     control={control}
                                                     rules={{ required: true }}
                                                     render={({ field }) =>
-
                                                         <Input {...field} size="sm" placeholder="Фамилия" sx={{ flexGrow: 1 }} value={CurrentUser?.surname} onChange={onChangeHandler} />} />
                                             </FormControl>
                                         </Stack>

@@ -6,12 +6,12 @@ export class User {
     email: string | undefined;
     token: string | undefined;
     pictureUrl: string | undefined;
-    role:number | undefined;
+    role:number | undefined = 0;
     IsAdmin!:number;
     telegramlogin: string | undefined;
     biography: string | undefined;
     Country: string | undefined;
-    TimeZone: number | undefined;
+    TimeZone: number | undefined = (Math.abs(new Date().getTimezoneOffset()))/60;
 }
 
 export class NewUser extends User {

@@ -1,8 +1,9 @@
 import Root from "../components/Root";
-
+import HeaderTop from '../components/HeaderTop';
 const Home = () => {
     return (
-        <><h1>Главная страница</h1>
+        <>
+        <HeaderTop Header='Домашняя страница' />
             <Root />
             </>
        

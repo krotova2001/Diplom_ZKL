@@ -15,7 +15,9 @@ const App = () => {
                     <LeftBar />
                 </Grid>
                 <Grid xs={10.5}>
+                    <div style={{marginLeft:'30px'}}>
                      {routes}
+                     </div>
                 </Grid>
             </ Grid>
         </>

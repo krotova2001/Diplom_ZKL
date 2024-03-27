@@ -91,7 +91,7 @@ function NavBar() {
                         <LanguageRoundedIcon />
                     </IconButton>
 
-                    <Link to="/home">
+                    <Link to="/">
                     <Button
                         variant="plain"
                         color="neutral"
@@ -107,9 +107,8 @@ function NavBar() {
                     <Button
                         variant="plain"
                         color="neutral"
-                        aria-pressed="true"
+                        aria-pressed="false"
                         component="a"
-                        href="/admin"
                         size="sm"
                         sx={{ alignSelf: 'center' }}
                     >

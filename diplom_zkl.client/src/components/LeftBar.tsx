@@ -19,11 +19,11 @@ export default function LeftBar() {
         return (
             <List
                 size="sm"
-                sx={{ '--ListItem-radius': 'var(--joy-radius-sm)', '--List-gap': '4px' }}
+                sx={{ '--ListItem-radius': 'var(--joy-radius-sm)', '--List-gap': '4px',marginLeft:'5px' }}
             >
                 <ListItem nested>
                     <ListSubheader sx={{ letterSpacing: '2px', fontWeight: '800' }}>
-                        Browse
+                        Личная
                     </ListSubheader>
                     <List
                         aria-labelledby="nav-list-browse"
@@ -36,7 +36,7 @@ export default function LeftBar() {
                                 <ListItemDecorator>
                                     <PeopleRoundedIcon fontSize="small" />
                                 </ListItemDecorator>
-                                <ListItemContent>Команда</ListItemContent>
+                                <ListItemContent>Моя команда</ListItemContent>
                             </ListItemButton>
                         </ListItem>
                         <ListItem>
@@ -52,7 +52,7 @@ export default function LeftBar() {
                                 <ListItemDecorator sx={{ color: 'neutral.500' }}>
                                     <AccountTreeRoundedIcon fontSize="small" />
                                 </ListItemDecorator>
-                                <ListItemContent>Проекты</ListItemContent>
+                                <ListItemContent>Мои проекты</ListItemContent>
                             </ListItemButton>
                         </ListItem>
                         <ListItem>
@@ -60,7 +60,7 @@ export default function LeftBar() {
                                 <ListItemDecorator sx={{ color: 'neutral.500' }}>
                                     <TodayRoundedIcon fontSize="small" />
                                 </ListItemDecorator>
-                                <ListItemContent>Задачи</ListItemContent>
+                                <ListItemContent>Мои задачи</ListItemContent>
                             </ListItemButton>
                         </ListItem>
                         <ListItem>
@@ -68,7 +68,7 @@ export default function LeftBar() {
                                 <ListItemDecorator sx={{ color: 'neutral.500' }}>
                                     <ArticleRoundedIcon fontSize="small" />
                                 </ListItemDecorator>
-                                <ListItemContent>Правила</ListItemContent>
+                                <ListItemContent>Сообщения</ListItemContent>
                                 <Chip variant="soft" color="warning" size="sm">
                                     2
                                 </Chip>

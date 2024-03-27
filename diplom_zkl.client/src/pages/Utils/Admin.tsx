@@ -23,6 +23,7 @@ import Divider from '@mui/joy/Divider';
 import DialogActions from '@mui/joy/DialogActions';
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
+import { Checkbox, Switch } from "@mui/joy";
 
 const Admin = () => {
     const [allUsers, setallUsers] = useState<User[]>([]); //таблица пользователей
@@ -85,6 +86,7 @@ const Admin = () => {
     return (
         <>
         <h3>Панель администратора</h3>
+        <Divider></Divider>
         <Box sx={{ height: 400, width: '80%', marginTop: '30px', marginLeft: '50px' }}>
         <DataGrid
           onRowSelectionModelChange={(rowSelectionModel)=>{
@@ -152,68 +154,77 @@ export default Admin
       <Modal open={open} onClose={() => setOpen(false)}>
         <ModalDialog>
           <DialogTitle>Создать нового пользователя</DialogTitle>
-          <DialogContent>Fill in the information of the project.</DialogContent>
+          <DialogContent>Внимателно заполните все необходимые поля.</DialogContent>
+        
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2}>
             <FormControl >
-
+            <Box
+      sx={{
+        py: 2,
+        display: 'grid',
+        gap: 2,
+        alignItems: 'center',
+        flexWrap: 'wrap',
+      }}
+    >
             <Controller
                     name="login"
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                     <Input {...field} size="sm" placeholder="Логин" value={newuser?.login} />} />
+                     <Input {...field} size="sm" placeholder="Логин" value={newuser?.login} required={true}/>} />
 
             <Controller
                     name="password"
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                     <Input {...field} size="sm" placeholder="Пароль" value={newuser?.password} />} />
+                     <Input {...field} size="sm" placeholder="Пароль" value={newuser?.password} required={true} />} />
 
                    <Controller
                     name="name"
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                     <Input {...field} size="sm" placeholder="Имя" value={newuser?.name} />} />
+                     <Input {...field} size="sm" placeholder="Имя" value={newuser?.name} required={true}/>} />
 
                      <Controller
                       name="surname"
                       control={control}
                       rules={{ required: true }}
                       render={({ field }) =>
-                      <Input {...field} size="sm" placeholder="Фамилия" sx={{ flexGrow: 1 }} value={newuser?.surname} />} />
+                      <Input {...field} size="sm" placeholder="Фамилия" sx={{ flexGrow: 1 }} value={newuser?.surname} required={true}/>} />
 
                     <Controller
                       name="email"
                       control={control}
                       rules={{ required: true }}
                       render={({ field }) =>
-                      <Input {...field} size="sm" placeholder="Email" sx={{ flexGrow: 1 }} value={newuser?.email} />} />
+                      <Input {...field} size="sm" placeholder="Email" sx={{ flexGrow: 1 }} value={newuser?.email} required={true}/>} />
 
 <Controller
                       name="telegramlogin"
                       control={control}
                       rules={{ required: true }}
                       render={({ field }) =>
-                      <Input {...field} size="sm" placeholder="Telegram" sx={{ flexGrow: 1 }} value={newuser?.telegramlogin} />} />
+                      <Input {...field} size="sm" placeholder="Telegram" sx={{ flexGrow: 1 }} value={newuser?.telegramlogin} required={false}/>} />
 
-                  <Label>Администратор</Label>
+                
                     <Controller
                       name="IsAdmin"
                       control={control}
                       rules={{ required: true }}
                       render={({ field }) =>
-                      <Input {...field} type="checkbox" value={newuser?.IsAdmin} />} />
-
-
-
+                      <Checkbox label="Администратор" {...field} value={newuser?.IsAdmin}/>} />
+                          </Box>
               </FormControl>
+          
               <Button type="submit">Создать</Button>
               <Button variant="plain" color="neutral" onClick={() => setOpen(false)}>Отмена</Button>
             </Stack>
           </form>
+         
         </ModalDialog>
       </Modal>
     </React.Fragment>

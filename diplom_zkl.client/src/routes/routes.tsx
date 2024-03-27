@@ -11,6 +11,8 @@ import { Task } from '@mui/icons-material';
 import Projects from '../pages/Projects';
 import Project from '../pages/Project';
 import Home from '../pages/Home';
+import Reports from '../pages/Reports';
+import AboutDiplom from '../pages/AboutDiplom';
 
 export const useRoutes = () => {
     return (
@@ -25,9 +27,11 @@ export const useRoutes = () => {
                 <Route path='/user/about' element={<UserAbout />} />
 
                 <Route path='/tasklist' element={<TaskList />} />
+                <Route path='/reports' element={<Reports />} />
                 <Route path='/task' element={<Task />} />
                 <Route path='/projectlist' element={<Projects />} />
                 <Route path='/project' element={<Project />} />
+                <Route path='/about' element={<AboutDiplom />} />
             </Route>
         </Routes>
     )

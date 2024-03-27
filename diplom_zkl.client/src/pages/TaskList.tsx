@@ -1,14 +1,18 @@
-import { Avatar, Box, Chip, Divider, List, ListItem, ListItemContent, ListItemDecorator, Sheet, Typography, styled } from '@mui/joy';
+import { Avatar, Badge, Box, Button, Chip, Divider, List, ListItem, ListItemContent, ListItemDecorator, Sheet, Typography, styled } from '@mui/joy';
 import Stack from '@mui/joy/Stack';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { TaskItemModel } from '../models/taskitem';
 import TaskItemsService from '../services/taskitemsservice';
 import TaskItemCard from '../components/TaskItemCard';
 import { Paper } from '@mui/material';
+import TaskTime from '../components/Tasktime';
+import HeaderTop from '../components/HeaderTop';
+import Add from '@mui/icons-material/Add';
 
 
 function TaskList() {
 const [TaskList, setTaskList] = useState<TaskItemModel[]>([]);
+const [open, setOpen] = React.useState<boolean>(false);
 
 useEffect(() => {
   TaskItemsService.getAllTasks().then((res: { data: SetStateAction<TaskItemModel[]>; }) => {
@@ -19,15 +23,16 @@ useEffect(() => {
 
   return (
     <>
-    <Typography sx={{
-      marginLeft: '45 px',
-      marginTop: '10px',
-      padding: '5px',
-      
-
-    }} 
-    level="h3">Мои задачи</Typography>
-    <Divider/>
+    <HeaderTop Header="Задачи"/>
+    <Button
+        size="sm" variant="soft" color="primary"
+        sx={{margin: '5px', marginTop: '10px'}}
+        startDecorator={<Add />}
+        onClick={() => setOpen(true)}
+      >
+        Новая задача
+      </Button>
+   
     <List
             sx={{
               display: 'grid',
@@ -47,14 +52,19 @@ useEffect(() => {
                   p: 2,
                   listStyle: 'none',
                 }}
-              >
+              > 
                 <Box sx={{ display: 'flex', gap: 2 }}>
                   <div>
+                  <Badge badgeContent={4} size="sm" badgeInset="-10%" anchorOrigin={{    vertical: 'top',    horizontal: 'right',  }} color={item.statement!=2? 'primary' : 'danger'}>
                     <Typography level="title-md">{item.title}</Typography>
+                    </Badge>
+                    <Divider component="div" sx={{ my: 1 }} />
                     <Typography level="body-xs">{item.description}</Typography>
+                    <Divider component="div" sx={{ my: 1 }} />
+                    <TaskTime start={item.start} end={item.end}/>
                   </div>
                 </Box>
-                <Divider component="div" sx={{ my: 2 }} />
+                
               </Sheet>
             ))}
           </List>

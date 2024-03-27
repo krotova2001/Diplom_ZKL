@@ -1,8 +1,8 @@
 import React from 'react';
-
+import HeaderTop from '../components/HeaderTop';
 function Projects() {
   return (
-    <p>Проекты</p>
+    <HeaderTop Header='Проекты' />
   );
 }
 
