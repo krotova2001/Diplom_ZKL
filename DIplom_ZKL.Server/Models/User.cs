@@ -1,7 +1,9 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace DIplom_ZKL.Server.Models;
 
@@ -10,6 +12,7 @@ namespace DIplom_ZKL.Server.Models;
 /// </summary>
 public partial class User
 {
+    [Key]
     public Guid Id { get; set; }
 
     public string Login { get; set; } = null!;
@@ -36,6 +39,7 @@ public partial class User
     public string? Country { get; set; }
 
     public int TimeZone { get; set; }
+    public DateTime? DeletedDate { get; set; } = null;
 
     //данные, необходимые только для аутентификаци
     public class UserLoginData

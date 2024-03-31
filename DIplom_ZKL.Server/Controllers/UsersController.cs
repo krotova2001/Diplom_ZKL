@@ -124,6 +124,8 @@ namespace DIplom_ZKL.Server.Controllers
             // находим пользователя 
             User? person = _context.Users.FirstOrDefault(p => p.Id == id);
             if (person is null) return Results.Empty;
+
+            
             _context.Users.Remove(person);
             _context.SaveChanges();
             return Results.Ok();
