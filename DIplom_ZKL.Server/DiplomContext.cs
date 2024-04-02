@@ -105,7 +105,7 @@ public partial class DiplomContext : DbContext
             entity.Property(e => e.Password)
                 .HasColumnType("character varying")
                 .HasColumnName("password");
-            entity.Property(e => e.Picture).HasColumnName("picture");
+            entity.Property(e => e.PictureUrl).HasColumnName("PictureUrl");
             entity.Property(e => e.Role).HasColumnName("role");
             entity.Property(e => e.Surname)
                 .HasColumnType("character varying")

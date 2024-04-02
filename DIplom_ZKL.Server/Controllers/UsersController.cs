@@ -53,7 +53,7 @@ namespace DIplom_ZKL.Server.Controllers
         [HttpPost]
         public IResult CreateUser([FromBody] User newUser)
         {
-            newUser.Id = new Guid();
+            newUser.Id = Guid.NewGuid();
             //тут придумать валидацию на null и некорректные данные
             _context.Users.Add(newUser);
             _context.SaveChanges();
@@ -109,6 +109,7 @@ namespace DIplom_ZKL.Server.Controllers
                 result.Name = value.Name;
                 result.Biography = value.Biography;
                 result.TimeZone = value.TimeZone;
+                result.PictureUrl = @$"userphotos\photo_{id}.jpg";
                 _context.SaveChanges();
                 return Results.Ok();
             }

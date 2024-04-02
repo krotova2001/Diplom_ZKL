@@ -11,6 +11,10 @@ class TaskItemsService {
         return axios.get(Endpoints.TASKS_API, { headers: authHeader() });
     }
 
+    createTask(task) {
+        return axios.post(Endpoints.TASKS_API, task, { headers: authHeader() });
+    }
+
 }
 
 export default new TaskItemsService();

@@ -31,7 +31,7 @@ const Admin = () => {
 
        //загрузить таблицу юзеров
     useEffect(() => {
-        UserService.getAllUsers().then(result => {
+        userService.getAllUsers().then(result => {
             setallUsers(result.data);
                 console.log(result.data);
         });
@@ -39,7 +39,7 @@ const Admin = () => {
 
     function deleteUser() {
       const guid: String = selectedUser[0];
-      UserService.deleteUser(guid).then(result => {
+      userService.deleteUser(guid).then(result => {
            if (result.status === 200) 
            {
             setallUsers(allUsers.filter(user => user.id!== selectedUser[0]));

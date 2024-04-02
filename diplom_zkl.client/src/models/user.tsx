@@ -7,7 +7,7 @@ export class User {
     token: string | undefined;
     pictureUrl: string | undefined;
     role:number | undefined = 0;
-    IsAdmin!:number;
+    IsAdmin:number = 0;
     telegramlogin: string | undefined;
     biography: string | undefined;
     Country: string | undefined;
@@ -18,4 +18,12 @@ export class NewUser extends User {
     password!: string;
     login!: string;
     pictureUrl = "";
+}
+
+export class usersInProject
+{
+    id!: string;
+    name: string | undefined;
+    surname: string | undefined;
+    pictureUrl: string | undefined;
 }

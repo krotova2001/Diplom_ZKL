@@ -77,6 +77,10 @@ namespace DIplom_ZKL.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Taskitem>> PostTaskitem(Taskitem taskitem)
         {
+            //не забываем заполнить недостающее. Не с фронта ж это забирать
+            taskitem.Id = Guid.NewGuid();
+            taskitem.CreatedAt = DateTime.Now;
+
             _context.Taskitems.Add(taskitem);
             await _context.SaveChangesAsync();
 
