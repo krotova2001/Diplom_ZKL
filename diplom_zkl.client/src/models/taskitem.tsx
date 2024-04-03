@@ -19,4 +19,5 @@ export class NewTask
     public end: Date|undefined;
     public author!: string;
     public statement!: number;
+    
 }

@@ -1,7 +1,7 @@
 import { Avatar, Badge, Box, Button, Chip, DialogActions, DialogContent, DialogTitle, Divider, FormControl, FormLabel, Input, List, ListItem, ListItemContent, ListItemDecorator, Modal, ModalDialog, Select, SelectOption, Sheet, Textarea, Typography, styled } from '@mui/joy';
 import Stack from '@mui/joy/Stack';
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { NewTask } from '../models/taskitem';
+import { NewTask, TaskItemModel } from '../models/taskitem';
 import TaskItemsService from '../services/taskitemsservice';
 import TaskItemCard from '../components/TaskItemCard';
 import { Paper } from '@mui/material';
@@ -14,6 +14,7 @@ import { User, usersInProject } from "../models/user";
 import Option from '@mui/joy/Option';
 import ListDivider from '@mui/joy/ListDivider';
 import userService from "../services/user.service";
+import Endpoints from "../services/endpoints";
 
 function TaskList() {
 const [TaskList, setTaskList] = useState<TaskItemModel[]>([]);
@@ -52,22 +53,20 @@ useEffect(() => {
               > 
                 <Box sx={{ display: 'flex', gap: 2 }}>
                   <div>
-                  <Badge badgeContent={4} size="sm" badgeInset="-10%" anchorOrigin={{    vertical: 'top',    horizontal: 'right',  }} color={item.statement!=2? 'primary' : 'danger'}>
-                    <Typography level="title-md">{item.title}</Typography>
-                    </Badge>
+                 
+                    <Typography level="title-md">{item.title}  <TaskBadge status={item.statement} /></Typography>
+                  
                     <Divider component="div" sx={{ my: 1 }} />
                     <Typography level="body-xs">{item.description}</Typography>
                     <Divider component="div" sx={{ my: 1 }} />
                     <TaskTime start={item.start} end={item.end}/>
                   </div>
                 </Box>
-                
+               
               </Sheet>
             ))}
           </List>
           <CreateNewTask/>
-
-         
           
    </>
   );
@@ -85,6 +84,7 @@ function CreateNewTask () {
   useEffect(() => {
     userService.getAllUsers().then((result: { data: React.SetStateAction<usersInProject[]>; }) => {
       setUsersInProject(result.data);
+      console.log(result.data);
     });
 }, []);
 
@@ -125,7 +125,7 @@ function renderValue(option: SelectOption<string> | null) {
   return (
     <React.Fragment>
       <ListItemDecorator>
-        <Avatar size="sm" src={UsersInProject.find((o) => o.id === option.id)?.pictureUrl} />
+        <Avatar size="sm" src={`${Endpoints.API_URL}` + `${UsersInProject.find((o) => o.id === option.value)?.pictureUrl}`} />
       </ListItemDecorator>
       {option.label}
     </React.Fragment>
@@ -216,7 +216,7 @@ function renderValue(option: SelectOption<string> | null) {
                           {index !== 0 ? <ListDivider role="none" inset="startContent" /> : null}
                           <Option value={option.id} label={option.name}>
                             <ListItemDecorator>
-                              <Avatar size="sm" src={option.pictureUrl} />
+                              <Avatar size="sm" src={`${Endpoints.API_URL}`+`${option.pictureUrl}`} />
                             </ListItemDecorator>
                             {option.name + ' ' + option.surname}
                           </Option>
@@ -257,3 +257,27 @@ function renderValue(option: SelectOption<string> | null) {
     </React.Fragment>)
 }
 
+type PropTypes = {
+  status: number
+};
+
+
+const TaskBadge: React.FC<PropTypes> = ({status}) => {
+    if(status == 1)
+    {
+      return ( <Chip color="neutral"  size="sm" disabled>Не начато</Chip> );
+    }
+    if (status == 2) { 
+      return ( <Chip color="success" size="sm" >В работе</Chip> );
+    }
+    if (status == 3) { 
+      return ( <Chip color="danger" size="sm" >На проверке</Chip> );
+    }
+    if (status == 4) { 
+      return ( <Chip color="warning" size="sm" >Выполнено</Chip> );
+    }
+    else
+    {
+      return (<></>)
+    }
+}
