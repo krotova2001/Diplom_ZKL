@@ -7,7 +7,7 @@ import Logout from '../pages/LogIn/Logout';
 import PasswordReset from '../pages/LogIn/PasswordReset';
 import UserAbout from '../pages/Utils/UserAbout';
 import TaskList from '../pages/TaskList';
-import { Task } from '@mui/icons-material';
+import Task from '../pages/Task';
 import Projects from '../pages/Projects';
 import Project from '../pages/Project';
 import Home from '../pages/Home';
@@ -28,7 +28,7 @@ export const useRoutes = () => {
 
                 <Route path='/tasklist' element={<TaskList />} />
                 <Route path='/reports' element={<Reports />} />
-                <Route path='/task' element={<Task />} />
+                <Route path='/task/:id' element={<Task />} />
                 <Route path='/projectlist' element={<Projects />} />
                 <Route path='/project' element={<Project />} />
                 <Route path='/about' element={<AboutDiplom />} />

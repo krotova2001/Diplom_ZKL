@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Button, Chip, DialogActions, DialogContent, DialogTitle, Divider, FormControl, FormLabel, Input, List, ListItem, ListItemContent, ListItemDecorator, Modal, ModalDialog, Select, SelectOption, Sheet, Textarea, Typography, styled } from '@mui/joy';
+import { Avatar, Badge, Box, Button, Chip, DialogActions, DialogContent, DialogTitle, Divider, FormControl, FormLabel, Input, Link, List, ListItem, ListItemContent, ListItemDecorator, Modal, ModalDialog, Select, SelectOption, Sheet, Textarea, Typography, styled } from '@mui/joy';
 import Stack from '@mui/joy/Stack';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { NewTask, TaskItemModel } from '../models/taskitem';
@@ -15,9 +15,11 @@ import Option from '@mui/joy/Option';
 import ListDivider from '@mui/joy/ListDivider';
 import userService from "../services/user.service";
 import Endpoints from "../services/endpoints";
+import { Route } from 'react-router';
 
 function TaskList() {
 const [TaskList, setTaskList] = useState<TaskItemModel[]>([]);
+
 useEffect(() => {
   TaskItemsService.getAllTasks().then((res: { data: SetStateAction<TaskItemModel[]>; }) => {
     setTaskList(res.data);
@@ -60,6 +62,8 @@ useEffect(() => {
                     <Typography level="body-xs">{item.description}</Typography>
                     <Divider component="div" sx={{ my: 1 }} />
                     <TaskTime start={item.start} end={item.end}/>
+                    <Divider component="div" sx={{ my: 1 }} />
+                    <Link href={"/Task/"+`${item.id}`} level="body-sm">Редактировать</Link>
                   </div>
                 </Box>
                
