@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DIplom_ZKL.Server.Models;
+using DIplom_ZKL.Server.Models.DTO;
 
 namespace DIplom_ZKL.Server.Controllers
 {
@@ -75,12 +76,22 @@ namespace DIplom_ZKL.Server.Controllers
         // POST: api/Taskitems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Taskitem>> PostTaskitem(Taskitem taskitem)
+        public async Task<ActionResult<Taskitem>> PostTaskitem(TaskitemDto taskitemDto)
         {
+            User author = await _context.Users.FirstOrDefaultAsync(u => u.Id == taskitemDto.AuthorId);
+            Statement statement = await _context.Statements.FirstOrDefaultAsync(s => s.Id == taskitemDto.StatementId);
+            Taskitem taskitem = new Taskitem();
             //не забываем заполнить недостающее. Не с фронта ж это забирать
             taskitem.Id = Guid.NewGuid();
+            taskitem.Title = taskitemDto.Title;
+            taskitem.Description = taskitemDto.Description;
+            taskitem.Start = taskitemDto.Start;
+            taskitem.End = taskitemDto.End;
             taskitem.CreatedAt = DateTime.Now;
-
+            taskitem.Author = author.Id;
+            taskitem.Statement = taskitemDto.StatementId;
+            taskitem.AuthorNavigation = author;
+            taskitem.StatementNavigation = statement;
             _context.Taskitems.Add(taskitem);
             await _context.SaveChangesAsync();
 
