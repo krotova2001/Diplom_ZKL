@@ -16,6 +16,7 @@ import ListDivider from '@mui/joy/ListDivider';
 import userService from "../services/user.service";
 import Endpoints from "../services/endpoints";
 import { Route } from 'react-router';
+import Snackbar from '@mui/joy/Snackbar';
 
 function TaskList() {
 const [TaskList, setTaskList] = useState<TaskItemModel[]>([]);
@@ -64,6 +65,7 @@ useEffect(() => {
                     <TaskTime start={item.start} end={item.end}/>
                     <Divider component="div" sx={{ my: 1 }} />
                     <Link href={"/Task/"+`${item.id}`} level="body-sm">Редактировать</Link>
+                    <Link href={"/Task/"+`${item.id}`} level="body-sm">Удалить</Link>
                   </div>
                 </Box>
                
@@ -81,8 +83,9 @@ export default TaskList;
 function CreateNewTask () {
   const [open, setOpen] = React.useState<boolean>(false);
   const { handleSubmit, control } = useForm<NewTask>();
+  const [newTask, setnewTask] = useState<NewTask>();
+  const [openSnackbar, setOpenSnackbar] = useState(false); //всплывашка справа
   const [UsersInProject, setUsersInProject] = useState<usersInProject[]>([]);  
-  let NewTask:NewTask;
 
   //загрузить таблицу юзеров
   useEffect(() => {
@@ -92,29 +95,39 @@ function CreateNewTask () {
     });
 }, []);
 
+const onChangeHandler = (e: { target: { name: string; value: string; }; }) => {
+  const { name, value } = e.target;
+  const MyTask: NewTask = { ...newTask, [name]: value } as NewTask;
+  setnewTask(MyTask);
+  console.log(MyTask);
+
+}
 
  //сохранить изменения
  function Save() {
   console.log(NewTask);
-  TaskItemsService.createTask(NewTask as NewTask).then((result) => 
+  if (newTask) {
+  TaskItemsService.createTask(newTask as NewTask).then((result) => 
   {
     if (result.status.toFixed(0) === "200") 
     {
       setOpen(false);
+      setOpenSnackbar(true);
+      window.location.reload();
     }}).catch((error) => {
       console.log(error);
-    });
+    });}
   };
-
 
   const onSubmit: SubmitHandler<NewTask> = (data) => 
   {
-    console.log(data);
     TaskItemsService.createTask(data as NewTask).then((result) => 
     {
       if (result.status.toFixed(0) === "200") 
       {
         setOpen(false);
+
+        window.location.reload();
       }}).catch((error) => {
         console.log(error);
       });
@@ -135,7 +148,6 @@ function renderValue(option: SelectOption<string> | null) {
     </React.Fragment>
   );
 }
-
 
   return (
     <React.Fragment>
@@ -165,37 +177,37 @@ function renderValue(option: SelectOption<string> | null) {
             >
  
                     <Controller
-                    name="title"
+                    name="Title"
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                    <Input {...field} size="sm" placeholder="Название" value={NewTask?.title} required={true}/>} />
+                    <Input {...field} size="sm" placeholder="Название" value={newTask?.Title} required={true} onChange={onChangeHandler}/>} />
                     
                     <Controller
-                    name="description"
+                    name="Description"
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                    <Textarea  {...field} size="sm" minRows={2} placeholder="Описание" value={NewTask?.description} required={true}/>} />
+                    <Textarea  {...field} size="sm" minRows={2} placeholder="Описание" value={newTask?.Description} required={true} onChange={onChangeHandler}/>} />
 
                     <FormControl >
                     <FormLabel>Старт</FormLabel>
                     <Controller
-                    name="start"
+                    name="Start"
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                    <Input {...field} type='date' size="sm" placeholder="Начало" value={NewTask?.start} required={false} defaultValue={Date.now()} />} />
+                    <Input {...field} type='date' size="sm" placeholder="Начало" value={newTask?.Start} required={false} defaultValue={Date.now()} onChange={onChangeHandler}/>} />
                     </FormControl>
 
                     <FormControl >
                     <FormLabel>Финиш</FormLabel>
                     <Controller
-                    name="end"
+                    name="End"
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                    <Input {...field} type='date' size="sm" placeholder="Конец" value={NewTask?.end} required={false}/>} />
+                    <Input {...field} type='date' size="sm" placeholder="Конец" value={newTask?.End} required={false} onChange={onChangeHandler}/>} />
                     </FormControl>
 
                     <FormControl >
@@ -258,6 +270,15 @@ function renderValue(option: SelectOption<string> | null) {
            </form>
           </ModalDialog>
           </Modal>
+          <Snackbar
+                    variant="soft"
+                    color="success"
+                    open={openSnackbar}
+                    onClose={() => setOpenSnackbar(false)}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    autoHideDuration={3000}>
+                    Изменения сохранены
+                </Snackbar>
     </React.Fragment>)
 }
 
