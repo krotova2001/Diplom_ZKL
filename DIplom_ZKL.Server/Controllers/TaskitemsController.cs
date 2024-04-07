@@ -79,7 +79,9 @@ namespace DIplom_ZKL.Server.Controllers
         public async Task<ActionResult<Taskitem>> PostTaskitem(TaskitemDto taskitemDto)
         {
             User author = await _context.Users.FirstOrDefaultAsync(u => u.Id == taskitemDto.AuthorId);
-            Statement statement = await _context.Statements.FirstOrDefaultAsync(s => s.Id == taskitemDto.StatementId);
+            Statement statement = await _context.Statements.FirstOrDefaultAsync(s => s.Id == (
+                (taskitemDto.StatementId != null && taskitemDto.StatementId > 1) ? taskitemDto.StatementId : 1  //TODO: Нормальную проверку бы
+            ));
             Taskitem taskitem = new Taskitem();
             //не забываем заполнить недостающее. Не с фронта ж это забирать
             taskitem.Id = Guid.NewGuid();
@@ -89,7 +91,7 @@ namespace DIplom_ZKL.Server.Controllers
             taskitem.End = taskitemDto.End;
             taskitem.CreatedAt = DateTime.Now;
             taskitem.Author = author.Id;
-            taskitem.Statement = taskitemDto.StatementId;
+            taskitem.Statement = statement.Id;
             taskitem.AuthorNavigation = author;
             taskitem.StatementNavigation = statement;
             _context.Taskitems.Add(taskitem);
