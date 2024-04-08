@@ -12,11 +12,16 @@ class TaskItemsService {
     }
 
     createTask(task) {
+        task.authorId = JSON.parse(localStorage.getItem('userId'));
         return axios.post(Endpoints.TASKS_API, task, { headers: authHeader() });
     }
 
     saveTask(task) {
         return axios.put(Endpoints.TASKS_API + task.id, task, { headers: authHeader() });
+    }
+
+    deleteTask(id) {
+        return axios.delete(Endpoints.TASKS_API + id, { headers: authHeader() });
     }
 
 }

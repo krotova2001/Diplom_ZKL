@@ -22,7 +22,10 @@ class AuthService {
     }
 
     logout() {
-        localStorage.removeItem("user");
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("userId");
+        sessionStorage.removeItem("userInfo");
+        sessionStorage.removeItem("userId");
     }
 
     //доделать, еще не готово

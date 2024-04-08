@@ -13,11 +13,11 @@ export class TaskItemModel
 
 export class NewTask
 {
-    public title!: string;
-    public description: string|undefined;
-    public start: Date | null | undefined;
-    public end: Date|undefined;
-    public author!: string;
+    public Title!: string;
+    public Description: string|undefined;
+    public Start: Date | null | undefined;
+    public End: Date|undefined;
+    public AuthorId: string | null | undefined;
     public statement!: number;
     
 }

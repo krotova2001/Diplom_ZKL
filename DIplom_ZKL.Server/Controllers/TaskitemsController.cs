@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DIplom_ZKL.Server.Models;
 using DIplom_ZKL.Server.Models.DTO;
+using System.Net;
 
 namespace DIplom_ZKL.Server.Controllers
 {
@@ -103,9 +104,9 @@ namespace DIplom_ZKL.Server.Controllers
         // POST: api/Taskitems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Taskitem>> PostTaskitem(TaskitemDto taskitemDto)
+        public async Task<HttpResponseMessage> PostTaskitem(TaskitemDto taskitemDto)
         {
-            User author = await _context.Users.FirstOrDefaultAsync(u => u.Id == taskitemDto.AuthorId);
+            User author = await _context.Users.FirstOrDefaultAsync(u => u.Id == Guid.Parse(taskitemDto.AuthorId));
             Statement statement = await _context.Statements.FirstOrDefaultAsync(s => s.Id == (
                 (taskitemDto.StatementId != null && taskitemDto.StatementId > 1) ? taskitemDto.StatementId : 1  //TODO: Нормальную проверку бы
             ));
@@ -124,7 +125,7 @@ namespace DIplom_ZKL.Server.Controllers
             _context.Taskitems.Add(taskitem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTaskitem", new { id = taskitem.Id }, taskitem);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         // DELETE: api/Taskitems/5
