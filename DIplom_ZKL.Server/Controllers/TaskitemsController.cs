@@ -45,11 +45,38 @@ namespace DIplom_ZKL.Server.Controllers
         // PUT: api/Taskitems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaskitem(Guid id, Taskitem taskitem)
+        public async Task<IActionResult> PutTaskitem(Guid id, TaskitemDto taskitemDto)
         {
-            if (id != taskitem.Id)
+            if (id != taskitemDto.Id)
             {
                 return BadRequest();
+            }
+
+            Taskitem taskitem = await _context.Taskitems.FirstOrDefaultAsync(t => t.Id == taskitemDto.Id);
+            
+            if(taskitem == null)
+            {
+                return NotFound();
+            }
+            
+            if (taskitemDto.Title != null) taskitem.Title = taskitemDto.Title;
+            if (taskitemDto.Description != null) taskitem.Description = taskitemDto.Description;
+            if (taskitemDto.Start != null) taskitem.Start = taskitemDto.Start;
+            if (taskitemDto.End != null) taskitem.End = taskitemDto.End;
+            if (taskitemDto.CreatedAt != null) taskitem.CreatedAt = taskitemDto.CreatedAt;// нужна другая проверка
+            if (taskitemDto.Author != null)
+            {
+                User author = await _context.Users.FirstOrDefaultAsync(u => u.Id == taskitemDto.AuthorId);
+                taskitem.Author = author.Id;
+                taskitem.AuthorNavigation = author;
+            }
+            if (taskitemDto.StatementId != null)
+            {
+                Statement statement = await _context.Statements.FirstOrDefaultAsync(s => s.Id == (
+                (taskitemDto.StatementId != null && taskitemDto.StatementId > 1) ? taskitemDto.StatementId : 1  //TODO: Нормальную проверку бы
+            ));
+                taskitem.Statement = statement.Id;
+                taskitem.StatementNavigation = statement;
             }
 
             _context.Entry(taskitem).State = EntityState.Modified;
