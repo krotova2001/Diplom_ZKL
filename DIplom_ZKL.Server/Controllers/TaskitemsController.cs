@@ -64,10 +64,9 @@ namespace DIplom_ZKL.Server.Controllers
             if (taskitemDto.Description != null) taskitem.Description = taskitemDto.Description;
             if (taskitemDto.Start != null) taskitem.Start = taskitemDto.Start;
             if (taskitemDto.End != null) taskitem.End = taskitemDto.End;
-            if (taskitemDto.CreatedAt != null) taskitem.CreatedAt = taskitemDto.CreatedAt;// нужна другая проверка
-            if (taskitemDto.Author != null)
+            if (taskitemDto.AuthorId != null)
             {
-                User author = await _context.Users.FirstOrDefaultAsync(u => u.Id == taskitemDto.AuthorId);
+                User author = await _context.Users.FirstOrDefaultAsync(u => u.Id == Guid.Parse(taskitemDto.AuthorId));
                 taskitem.Author = author.Id;
                 taskitem.AuthorNavigation = author;
             }
