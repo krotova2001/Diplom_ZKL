@@ -64,16 +64,16 @@ namespace DIplom_ZKL.Server.Controllers
             if (taskitemDto.Description != null) taskitem.Description = taskitemDto.Description;
             if (taskitemDto.Start != null) taskitem.Start = taskitemDto.Start;
             if (taskitemDto.End != null) taskitem.End = taskitemDto.End;
-            if (taskitemDto.AuthorId != null)
+            if (taskitemDto.Author != null)
             {
-                User author = await _context.Users.FirstOrDefaultAsync(u => u.Id == Guid.Parse(taskitemDto.AuthorId));
+                User author = await _context.Users.FirstOrDefaultAsync(u => u.Id == Guid.Parse(taskitemDto.Author));
                 taskitem.Author = author.Id;
                 taskitem.AuthorNavigation = author;
             }
-            if (taskitemDto.StatementId != null)
+            if (taskitemDto.Statement != null)
             {
                 Statement statement = await _context.Statements.FirstOrDefaultAsync(s => s.Id == (
-                (taskitemDto.StatementId != null && taskitemDto.StatementId > 1) ? taskitemDto.StatementId : 1  //TODO: Нормальную проверку бы
+                (taskitemDto.Statement != null && taskitemDto.Statement > 1) ? taskitemDto.Statement : 1  //TODO: Нормальную проверку бы
             ));
                 taskitem.Statement = statement.Id;
                 taskitem.StatementNavigation = statement;
@@ -105,9 +105,9 @@ namespace DIplom_ZKL.Server.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> PostTaskitem(TaskitemDto taskitemDto)
         {
-            User author = await _context.Users.FirstOrDefaultAsync(u => u.Id == Guid.Parse(taskitemDto.AuthorId));
+            User author = await _context.Users.FirstOrDefaultAsync(u => u.Id == Guid.Parse(taskitemDto.Author));
             Statement statement = await _context.Statements.FirstOrDefaultAsync(s => s.Id == (
-                (taskitemDto.StatementId != null && taskitemDto.StatementId > 1) ? taskitemDto.StatementId : 1  //TODO: Нормальную проверку бы
+                (taskitemDto.Statement != null && taskitemDto.Statement > 1) ? taskitemDto.Statement : 1  //TODO: Нормальную проверку бы
             ));
             Taskitem taskitem = new Taskitem();
             //не забываем заполнить недостающее. Не с фронта ж это забирать
