@@ -44,23 +44,25 @@ function renderValue(option: SelectOption<string> | null) {
     );
   }
   
+  function onChangeStatement(text: string) 
+  {
+    if (text != 'undefined') {
+      let status: number = 0;
+      if (text== 'Не начато') {status=1}
+      if (text== 'В работе') {status=2}
+      if (text== 'На проверке') {status=3}
+      if (text== 'Завершено') {status=4}
+    const MyTask: TaskItemModel = { ...Task, statement: status } as TaskItemModel;
+    setTask(MyTask);
+   }
+  }
 
   const onChangeHandlerDate = (e: { target: { name: string; value: string; }; }) => {
     const { name, value } = e.target;
     const MyTask: TaskItemModel = { ...Task, [name]: value } as TaskItemModel;
     setTask(MyTask);
     console.log(MyTask);
-  
   }
-
-const handleChange = (
-    event: React.SyntheticEvent | null,
-    newValue: number | null,
-  ) => {
-  const tempTask: TaskItemModel = { ...Task, statement: newValue } as TaskItemModel;
-  setTask(tempTask);
-  };
-
 
   useEffect(() => {
     userService.getAllUsers().then((result: { data: React.SetStateAction<usersInProject[]>; }) => {
@@ -114,20 +116,21 @@ const handleChange = (
                                             <FormLabel>Название</FormLabel>
                                             <FormControl sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}>
                                                 <Controller
-                                                    name="description"
+                                                    name="title"
                                                     control={control}
                                                     rules={{ required: true }}
                                                     render={({ field }) =>
-                                                        <Input {...field} size="sm" placeholder="Название" value={Task?.title}  />} />
+                                                    <Input {...field} size="sm" placeholder="Название" value={Task?.title} onChange={onChangeHandlerDate}/>} />
                                             </FormControl>
                                             <FormControl>
                                                 <FormLabel>Описание</FormLabel>                              
                                                 <Controller
-                                                    name="statement"
+                                                    name="description"
                                                     control={control}
                                                     rules={{ required: true }}
                                                     render={({ field }) =>
-                                                   <Textarea {...field} size="sm" placeholder="Описание" sx={{ mb: 1 }} value={Task?.description} />} />                                            </FormControl>
+                                                   <Textarea {...field} size="sm" placeholder="Описание" sx={{ mb: 1 }} value={Task?.description} onChange={onChangeHandlerDate}/>} />
+                                                   </FormControl>
                                         </Stack>
                                         <Stack direction="row" spacing={2}>
                                         <FormControl >
@@ -138,7 +141,7 @@ const handleChange = (
                                         control={control}
                                         rules={{ required: true }}
                                         render={({ field }) =>
-                                        <Input {...field} type='date' size="sm" placeholder="Начало" value={Task?.start} required={false} defaultValue={Date.now()} onChange={onChangeHandlerDate}/>} />
+                                        <Input {...field} type='date' size="sm" placeholder="Начало" value={Task?.start?.toString()} required={false} defaultValue={Date.now()} onChange={onChangeHandlerDate}/>} />
                                         </FormControl>
 
                                         <FormControl >
@@ -148,19 +151,23 @@ const handleChange = (
                                         control={control}
                                         rules={{ required: true }}
                                         render={({ field }) =>
-                                        <Input {...field} type='date' size="sm" placeholder="Конец" value={Task?.end} required={false} onChange={onChangeHandlerDate}/>} />
+                                        <Input {...field} type='date' size="sm" placeholder="Конец" value={Task?.end?.toString()} required={false} defaultValue={Date.now()} onChange={onChangeHandlerDate}/>} />
                                         </FormControl>
                                             </Stack>
                                            
-
                                             <FormControl>
                                                 <FormLabel>Состояние</FormLabel>
-                                                <Select defaultValue="1" onChange={handleChange}>
+                                                <Controller
+                                        name="statement"
+                                        control={control}
+                                        rules={{ required: true }}
+                                        render={({ field }) =>
+                                                <Select {...field} value={Task?.statement.toString()} size="sm" placeholder="Состояние" onChange={e=>onChangeStatement(e?.target?.innerText)} >          
                                                 <Option value="1">Не начато</Option>
                                                 <Option value="2">В работе</Option>
                                                 <Option value="3">На проверке</Option>
                                                 <Option value="4">Завершено</Option>
-                                                </Select>
+                                                </Select>} />
                                             </FormControl>
                                            
                                           

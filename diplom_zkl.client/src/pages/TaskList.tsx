@@ -65,7 +65,6 @@ useEffect(() => {
                     <TaskTime start={item.start} end={item.end}/>
                     <Divider component="div" sx={{ my: 1 }} />
                     <Link href={"/Task/"+`${item.id}`} level="body-sm">Редактировать</Link>
-                    <Link href={"/Task/"+`${item.id}`} level="body-sm">Удалить</Link>
                   </div>
                 </Box>
                
