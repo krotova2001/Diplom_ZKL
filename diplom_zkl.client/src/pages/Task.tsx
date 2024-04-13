@@ -20,7 +20,8 @@ function Task() {
   const [Task, setTask] = useState<TaskItemModel>();
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
-  const [openSnackbar, setOpenSnackbar] = useState(false); //всплывашка справа
+  const [openSnackbar, setOpenSnackbar] = useState(false); //всплывашка хорошая
+  const [openSnackbarBad, setOpenSnackbarBad] = useState(false); //всплывашка справа
   const [UsersInProject, setUsersInProject] = useState<usersInProject[]>([]);  
 
 
@@ -78,9 +79,13 @@ function renderValue(option: SelectOption<string> | null) {
   {
     console.log(Task);
     TaskItemsService.saveTask(Task).then((res) => {
+      if (res.status === 200) {
         setOpenSnackbar(true)}
+      
+      else {
+        setOpenSnackbarBad(true)};
+      }
     );}
-
 
 
   function deleteTask()
@@ -88,7 +93,7 @@ function renderValue(option: SelectOption<string> | null) {
     TaskItemsService.deleteTask(prodId).then((res) => {
         if(res.status === 204)
             {
-                navigate('/tasklist');
+              navigate('/tasklist', { replace: true });
             }
     });
   }
@@ -229,6 +234,16 @@ function renderValue(option: SelectOption<string> | null) {
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                     autoHideDuration={3000}>
                     Изменения сохранены
+                </Snackbar>
+
+                <Snackbar
+                    variant="soft"
+                    color="danger"
+                    open={openSnackbarBad}
+                    onClose={() => setOpenSnackbarBad(false)}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    autoHideDuration={3000}>
+                    Что-то пошло не так
                 </Snackbar>
     </>
   );

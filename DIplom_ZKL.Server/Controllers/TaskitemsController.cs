@@ -96,8 +96,7 @@ namespace DIplom_ZKL.Server.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/Taskitems
