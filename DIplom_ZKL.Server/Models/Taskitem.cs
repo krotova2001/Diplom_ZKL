@@ -23,9 +23,14 @@ public partial class Taskitem
 
     public Guid Author { get; set; }
 
+    public Guid ProjectId { get; set; }
+
     public int Statement { get; set; }
 
     public virtual User AuthorNavigation { get; set; } = null!;
 
     public virtual Statement StatementNavigation { get; set; } = null!;
+
+    public virtual Project ProjectNavigation { get; set; } = null!;
+
 }

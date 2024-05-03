@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DIplom_ZKL.Server.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace DIplom_ZKL.Server;
 
@@ -23,6 +24,8 @@ public partial class DiplomContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<Project> Projects { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
     {
@@ -30,6 +33,9 @@ public partial class DiplomContext : DbContext
         builder.SetBasePath(Directory.GetCurrentDirectory());
         builder.AddJsonFile("appsettings.json");
         optionsBuilder.UseNpgsql(builder.Build().GetConnectionString("constring"));
+        optionsBuilder.ConfigureWarnings(warnings =>
+
+            warnings.Ignore(CoreEventId.NavigationBaseIncludeIgnored));
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -73,6 +79,9 @@ public partial class DiplomContext : DbContext
                 .HasColumnType("character varying")
                 .HasColumnName("title");
 
+            entity.Property(e => e.ProjectId)
+               .HasColumnName("ProjectId");
+
             entity.HasOne(d => d.AuthorNavigation).WithMany()
                 .HasForeignKey(d => d.Author)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -82,6 +91,12 @@ public partial class DiplomContext : DbContext
                 .HasForeignKey(d => d.Statement)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("statament");
+
+            entity.HasOne(d => d.ProjectNavigation).WithMany()
+               .HasForeignKey(d => d.ProjectId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("project");
+
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -113,6 +128,18 @@ public partial class DiplomContext : DbContext
             entity.Property(e => e.Telegramlogin)
                 .HasColumnType("character varying")
                 .HasColumnName("telegramlogin");
+        });
+
+        modelBuilder.Entity<Project>(entity => {
+            entity.ToTable("project", tb => tb.HasComment("Проекты"));
+            entity.HasKey(e => e.Id).HasName("project_pkey");
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
+            entity.Property(e => e.Title).HasColumnName("title");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.HasMany(e => e.UserNavigation).WithMany(u => u.UserProjects);
+            entity.HasMany(e => e.TaskitemNavigation).WithOne(p => p.ProjectNavigation);
         });
 
         OnModelCreatingPartial(modelBuilder);

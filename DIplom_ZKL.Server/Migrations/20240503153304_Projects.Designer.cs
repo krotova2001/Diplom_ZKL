@@ -3,6 +3,7 @@ using System;
 using DIplom_ZKL.Server;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DIplom_ZKL.Server.Migrations
 {
     [DbContext(typeof(DiplomContext))]
-    partial class DiplomContextModelSnapshot : ModelSnapshot
+    [Migration("20240503153304_Projects")]
+    partial class Projects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,10 +89,6 @@ namespace DIplom_ZKL.Server.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("end");
 
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("ProjectId");
-
                     b.Property<DateTime?>("Start")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("start");
@@ -105,13 +104,16 @@ namespace DIplom_ZKL.Server.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("title");
 
+                    b.Property<Guid?>("projectId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Author");
 
-                    b.HasIndex("ProjectId");
-
                     b.HasIndex("Statement");
+
+                    b.HasIndex("projectId");
 
                     b.ToTable("taskitem", null, t =>
                         {
@@ -212,23 +214,21 @@ namespace DIplom_ZKL.Server.Migrations
                         .IsRequired()
                         .HasConstraintName("user");
 
-                    b.HasOne("DIplom_ZKL.Server.Models.Project", "ProjectNavigation")
-                        .WithMany("TaskitemNavigation")
-                        .HasForeignKey("ProjectId")
-                        .IsRequired()
-                        .HasConstraintName("project");
-
                     b.HasOne("DIplom_ZKL.Server.Models.Statement", "StatementNavigation")
                         .WithMany()
                         .HasForeignKey("Statement")
                         .IsRequired()
                         .HasConstraintName("statament");
 
+                    b.HasOne("DIplom_ZKL.Server.Models.Project", "project")
+                        .WithMany("TaskitemNavigation")
+                        .HasForeignKey("projectId");
+
                     b.Navigation("AuthorNavigation");
 
-                    b.Navigation("ProjectNavigation");
-
                     b.Navigation("StatementNavigation");
+
+                    b.Navigation("project");
                 });
 
             modelBuilder.Entity("ProjectUser", b =>

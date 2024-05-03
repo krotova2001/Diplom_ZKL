@@ -38,6 +38,7 @@ public partial class User
 
     public int TimeZone { get; set; }
     public DateTime? DeletedDate { get; set; } = null;
+    public virtual ICollection<Project>? UserProjects { get; set; }
 
     //данные, необходимые только для аутентификаци
     public class UserLoginData
