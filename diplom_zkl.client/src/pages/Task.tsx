@@ -13,7 +13,6 @@ import React from 'react';
 import Endpoints from '../services/endpoints';
 import userService from '../services/user.service';
 
-
 function Task() {
   const params = useParams();
   const prodId = params.id;

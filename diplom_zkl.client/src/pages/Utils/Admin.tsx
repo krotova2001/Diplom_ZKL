@@ -47,6 +47,8 @@ const Admin = () => {
         });    
     }
 
+
+
     const columns: GridColDef[] = [
         {
           field: 'name',
@@ -112,10 +114,7 @@ const Admin = () => {
       <Button disabled={!(selectedUser.length>0)} size="md" variant="solid" color="danger" sx={{marginLeft: '5px'}} startDecorator={<Remove />} onClick={deleteUser}> 
       Удалить пользователя</Button>
       </Box>
-     
-
       </>
-
     )
 }
 export default Admin
@@ -123,13 +122,23 @@ export default Admin
 
 //компонент создания пользователя
  function NewUserModal () {
-  const [newuser, setnewUser] = useState<NewUser>(); //текущий пользователь
   const { handleSubmit, control } = useForm<NewUser>();
   const [open, setOpen] = React.useState<boolean>(false);
-  const onSubmit: SubmitHandler<NewUser> = (data) => 
+  const [newuser, setnewuser] = React.useState<NewUser>();
+
+  //записать свойство в объект юзера
+  const onChangeHandler = (e: { target: { name: string; value: string; }; }) => {
+    const { name, value } = e.target;
+    const tempUser: NewUser = { ...newuser, [name]: value } as NewUser;
+    setnewuser(tempUser);
+    console.log(tempUser);
+
+}
+
+  const onSubmit: SubmitHandler<NewUser> = (data:NewUser|undefined) => 
   {
+    if (!data) return;
     data.pictureUrl = '';
-    console.log(data);
     userService.createUser(data as NewUser).then((result) => 
     {
       if (result.status.toFixed(0) === "200") 
@@ -138,7 +147,7 @@ export default Admin
       }}).catch((error) => {
         console.log(error);
       });
-   
+   window.location.reload();
     };
 
   return (
@@ -173,42 +182,42 @@ export default Admin
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                     <Input {...field} size="sm" placeholder="Логин" value={newuser?.login} required={true}/>} />
+                     <Input {...field} size="sm" placeholder="Логин" value={newuser?.login} required={true} onChange={onChangeHandler}/>} />
 
             <Controller
                     name="password"
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                     <Input {...field} size="sm" placeholder="Пароль" value={newuser?.password} required={true} />} />
+                     <Input {...field} size="sm" placeholder="Пароль" value={newuser?.password} required={true} onChange={onChangeHandler} />} />
 
                    <Controller
                     name="name"
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                     <Input {...field} size="sm" placeholder="Имя" value={newuser?.name} required={true}/>} />
+                     <Input {...field} size="sm" placeholder="Имя" value={newuser?.name} required={true} onChange={onChangeHandler}/>} />
 
                      <Controller
                       name="surname"
                       control={control}
                       rules={{ required: true }}
                       render={({ field }) =>
-                      <Input {...field} size="sm" placeholder="Фамилия" sx={{ flexGrow: 1 }} value={newuser?.surname} required={true}/>} />
+                      <Input {...field} size="sm" placeholder="Фамилия" sx={{ flexGrow: 1 }} value={newuser?.surname} required={true} onChange={onChangeHandler}/>} />
 
                     <Controller
                       name="email"
                       control={control}
                       rules={{ required: true }}
                       render={({ field }) =>
-                      <Input {...field} size="sm" placeholder="Email" sx={{ flexGrow: 1 }} value={newuser?.email} required={true}/>} />
+                      <Input {...field} size="sm" placeholder="Email" sx={{ flexGrow: 1 }} value={newuser?.email} required={true} onChange={onChangeHandler}/>} />
 
 <Controller
                       name="telegramlogin"
                       control={control}
                       rules={{ required: true }}
                       render={({ field }) =>
-                      <Input {...field} size="sm" placeholder="Telegram" sx={{ flexGrow: 1 }} value={newuser?.telegramlogin} required={false}/>} />
+                      <Input {...field} size="sm" placeholder="Telegram" sx={{ flexGrow: 1 }} value={newuser?.telegramlogin} required={false} onChange={onChangeHandler}/>} />
 
                 
                     <Controller
@@ -216,11 +225,13 @@ export default Admin
                       control={control}
                       rules={{ required: true }}
                       render={({ field }) =>
-                      <Checkbox label="Администратор" {...field} value={newuser?.IsAdmin}/>} />
+                      <Checkbox label="Администратор" {...field} value={newuser?.IsAdmin} onChange={onChangeHandler}/>} />
                           </Box>
               </FormControl>
           
-              <Button type="submit">Создать</Button>
+              <Button onClick={()=>{ 
+                if (newuser != undefined)onSubmit(newuser)
+                }}>Создать</Button>
               <Button variant="plain" color="neutral" onClick={() => setOpen(false)}>Отмена</Button>
             </Stack>
           </form>
