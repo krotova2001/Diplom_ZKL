@@ -21,10 +21,12 @@ namespace DIplom_ZKL.Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Project>>>Get(Guid id)
         {
-            User? person = _context.Users.FirstOrDefault(p => p.Id == id);
-            if (person is null) return null;
-            return await _context.Projects.Where(p=>p.UserNavigation.Contains(person))
-                .Include(t=>t.TaskitemNavigation)
+            User? person = _context.Users.FirstOrDefault(person => person.Id == id);
+            
+            if (person is null) return BadRequest();
+
+            return await _context.Projects.Include(project => project.TaskitemNavigation)
+                .Where(project => project.UserNavigation.Contains(person))
                 .ToListAsync();
         }
         
