@@ -92,7 +92,7 @@ public partial class DiplomContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("statament");
 
-            entity.HasOne(d => d.ProjectNavigation).WithMany()
+            entity.HasOne(d => d.ProjectNavigation).WithMany(p=>p.TaskitemNavigation)
                .HasForeignKey(d => d.ProjectId)
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("project");

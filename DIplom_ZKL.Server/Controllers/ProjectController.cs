@@ -25,7 +25,7 @@ namespace DIplom_ZKL.Server.Controllers
             
             if (person is null) return BadRequest();
 
-            return await _context.Projects.Include(project => project.TaskitemNavigation)
+            return await _context.Projects.Include(project => project.TaskitemNavigation).Include(u => u.UserNavigation)
                 .Where(project => project.UserNavigation.Contains(person))
                 .ToListAsync();
         }
@@ -34,15 +34,15 @@ namespace DIplom_ZKL.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Project>>> GetAll()
         {
-            return await _context.Projects
+            return await _context.Projects.Include(p => p.TaskitemNavigation).Include(u=>u.UserNavigation)
                 .ToListAsync();
         }
         
         // GET api/<ProjectController>/5
         [HttpGet("/Detail/{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<Project>> GetOne(Guid id)
         {
-            return "value";
+            return await _context.Projects.Include(p => p.TaskitemNavigation).Include(u => u.UserNavigation).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         // POST api/<ProjectController>

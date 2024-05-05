@@ -47,9 +47,13 @@ const Admin = () => {
         });    
     }
 
-
-
     const columns: GridColDef[] = [
+      {
+        field: 'login',
+        headerName: 'Логин',
+        width: 150,
+        editable: false,
+      },
         {
           field: 'name',
           headerName: 'Имя',
@@ -81,6 +85,13 @@ const Admin = () => {
             headerName: 'Права',
             type: 'number',
             width: 100,
+            editable: true,
+          },
+          {
+            field: 'isAdmin',
+            headerName: 'Администратор',
+            type: 'boolean',
+            width: 150,
             editable: true,
           },
       ];

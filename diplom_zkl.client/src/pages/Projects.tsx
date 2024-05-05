@@ -14,6 +14,7 @@ function Projects() {
   useEffect(() => {
     ProjectItemService.getAllProjects().then((res: { data: SetStateAction<ProjectItem[]>; }) => {
       setProjectList(res.data);
+      console.log(res.data);
     });
   }, []);
 
