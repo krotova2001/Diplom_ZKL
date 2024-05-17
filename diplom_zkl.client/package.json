@@ -10,24 +10,30 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/server": "^11.11.0",
+    "@emotion/styled": "^11.11.5",
     "@fontsource/inter": "^5.0.16",
     "@mui/icons-material": "^5.15.7",
     "@mui/joy": "^5.0.0-beta.25",
-    "@mui/material": "^5.15.12",
+    "@mui/material": "^5.15.17",
     "@mui/styled-engine-sc": "^6.0.0-alpha.17",
+    "@mui/x-charts": "^7.4.0",
     "@mui/x-data-grid": "^6.19.6",
     "@popperjs/core": "^2.11.8",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
+    "datajs": "1.0.3",
+    "dayjs": "^1.11.11",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
     "react-router": "^6.21.3",
     "react-router-dom": "^6.22.0",
-    "styled-components": "^6.1.8"
+    "react-select": "^5.8.0",
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",

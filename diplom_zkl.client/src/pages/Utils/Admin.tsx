@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import UserService from "../../services/user.service";
 import { User, NewUser } from "../../models/user";
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Box } from "@mui/material";
 import Button from '@mui/joy/Button';
 import * as React from 'react';
 import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
 import Modal from '@mui/joy/Modal';
 import ModalDialog from '@mui/joy/ModalDialog';
@@ -18,12 +16,8 @@ import Add from '@mui/icons-material/Add';
 import Remove from '@mui/icons-material/Remove';
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import userService from "../../services/user.service";
-import { Label } from "@mui/icons-material";
 import Divider from '@mui/joy/Divider';
-import DialogActions from '@mui/joy/DialogActions';
-import DeleteForever from '@mui/icons-material/DeleteForever';
-import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
-import { Checkbox, Switch } from "@mui/joy";
+import { Checkbox } from "@mui/joy";
 
 const Admin = () => {
     const [allUsers, setallUsers] = useState<User[]>([]); //таблица пользователей
@@ -38,7 +32,7 @@ const Admin = () => {
     }, []);
 
     function deleteUser() {
-      const guid: String = selectedUser[0];
+      const guid: string = selectedUser[0];
       userService.deleteUser(guid).then(result => {
            if (result.status === 200) 
            {

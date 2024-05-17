@@ -1,21 +1,18 @@
-import { Avatar, Badge, Box, Button, Chip, DialogActions, DialogContent, DialogTitle, Divider, FormControl, FormLabel, Input, Link, List, ListItem, ListItemContent, ListItemDecorator, Modal, ModalDialog, Select, SelectOption, Sheet, Textarea, Typography, styled } from '@mui/joy';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Avatar,  Box, Button, Chip,  DialogTitle, Divider, FormControl, FormLabel, Input, Link, List, ListItemDecorator, Modal, ModalDialog, Select, SelectOption, Sheet, Textarea, Typography } from '@mui/joy';
 import Stack from '@mui/joy/Stack';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { NewTask, TaskItemModel } from '../models/taskitem';
 import TaskItemsService from '../services/taskitemsservice';
-import TaskItemCard from '../components/TaskItemCard';
-import { Paper } from '@mui/material';
 import TaskTime from '../components/Tasktime';
 import HeaderTop from '../components/HeaderTop';
 import Add from '@mui/icons-material/Add';
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Label } from '@mui/icons-material';
-import { User, usersInProject } from "../models/user";
+import { usersInProject } from "../models/user";
 import Option from '@mui/joy/Option';
 import ListDivider from '@mui/joy/ListDivider';
 import userService from "../services/user.service";
 import Endpoints from "../services/endpoints";
-import { Route } from 'react-router';
 import Snackbar from '@mui/joy/Snackbar';
 
 
@@ -65,7 +62,7 @@ useEffect(() => {
                     <Divider component="div" sx={{ my: 1 }} />
                     <Typography level="body-xs">{item.description}</Typography>
                     <Divider component="div" sx={{ my: 1 }} />
-                    <TaskTime start={item.start} end={item.end}/>
+                    <TaskTime start={item?.start} end={item.end}/>
                     <Divider component="div" sx={{ my: 1 }} />
                     <Link href={"/Task/"+`${item.id}`} level="body-sm">Редактировать</Link>
                   </div>
@@ -119,7 +116,7 @@ const onChangeHandler = (e: { target: { name: string; value: string; }; }) => {
     }}).catch((error) => {
       console.log(error);
     });}
-  };
+  }
 
   const onSubmit: SubmitHandler<NewTask> = (data) => 
   {
@@ -199,7 +196,7 @@ function renderValue(option: SelectOption<string> | null) {
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                    <Input {...field} type='date' size="sm" placeholder="Начало" value={newTask?.Start} required={false} defaultValue={Date.now()} onChange={onChangeHandler}/>} />
+                         <Input {...field} type='date' size="sm" placeholder="Начало" value={newTask?.Start?.toLocaleDateString()} required={false} defaultValue={Date.now()} onChange={onChangeHandler}/>} />
                     </FormControl>
 
                     <FormControl >
@@ -209,7 +206,7 @@ function renderValue(option: SelectOption<string> | null) {
                     control={control}
                     rules={{ required: true }}
                      render={({ field }) =>
-                    <Input {...field} type='date' size="sm" placeholder="Конец" value={newTask?.End} required={false} onChange={onChangeHandler}/>} />
+                    <Input {...field} type='date' size="sm" placeholder="Конец" value={newTask?.End?.toLocaleDateString()} required={false} onChange={onChangeHandler}/>} />
                     </FormControl>
 
                     <FormControl >

@@ -60,7 +60,7 @@ export default function UserAbout() {
 
     //загрузить текущего юзера на страницу
     useEffect(() => {
-        authService.getCurrentUser().then(user => {
+        authService.getCurrentUser()?.then(user => {
             if (selectedImage == undefined) {
                 setcurrentUser(user.data);
                 console.log(user.data);

@@ -56,7 +56,7 @@ function NavBar() {
     const [CurrentUser, setcurrentUser] = useState<User>(); //текущий пользователь
 
     useEffect(() => {
-        authService.getCurrentUser().then(user => {
+        authService.getCurrentUser()?.then(user => {
             setcurrentUser(user.data);
         });
     }, []);

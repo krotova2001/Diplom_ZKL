@@ -1,3 +1,4 @@
+
 import Root from "../components/Root";
 import HeaderTop from '../components/HeaderTop';
 const Home = () => {
@@ -5,6 +6,7 @@ const Home = () => {
         <>
         <HeaderTop Header='Домашняя страница' />
             <Root />
+          
             </>
        
     )

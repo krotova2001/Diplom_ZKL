@@ -1,5 +1,4 @@
 //страница сброса пароля
-import React from 'react';
 
 
 

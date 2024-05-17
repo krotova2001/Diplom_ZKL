@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router';
 import HeaderTop from '../components/HeaderTop';
 import { TaskItemModel } from '../models/taskitem';
 import TaskItemsService from '../services/taskitemsservice';
-import { Avatar, Box, Button, Card, CardActions, CardOverflow, Divider, FormControl, FormLabel, Input, ListDivider, ListItemDecorator, Stack, Textarea, TextField, Typography } from '@mui/joy';
+import { Avatar, Box, Button, Card, CardActions, CardOverflow, Divider, FormControl, FormLabel, Input, ListDivider, ListItemDecorator, Stack, Textarea, Typography } from '@mui/joy';
 import { Controller, useForm } from 'react-hook-form';
 import Select, { SelectOption } from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
@@ -18,13 +18,12 @@ function Task() {
   const prodId = params.id;
   const [Task, setTask] = useState<TaskItemModel>();
   const navigate = useNavigate();
-  const [open, setOpen] = useState<boolean>(false);
   const [openSnackbar, setOpenSnackbar] = useState(false); //всплывашка хорошая
   const [openSnackbarBad, setOpenSnackbarBad] = useState(false); //всплывашка справа
   const [UsersInProject, setUsersInProject] = useState<usersInProject[]>([]);  
 
 
-  const { handleSubmit, control } = useForm<TaskItemModel>(
+  const { control } = useForm<TaskItemModel>(
     {
         defaultValues: Task
     }
@@ -43,20 +42,21 @@ function renderValue(option: SelectOption<string> | null) {
       </React.Fragment>
     );
   }
-  
-  function onChangeStatement(text: string) 
-  {
-    if (text != 'undefined') {
+  /*
+    const onChangeStatement = (e: { target: { name: string; value: string; }; }) => {
+      const text: string = e.target.value;
+      if (text != 'undefined')
+      {
       let status: number = 0;
       if (text== 'Не начато') {status=1}
       if (text== 'В работе') {status=2}
       if (text== 'На проверке') {status=3}
       if (text== 'Завершено') {status=4}
-    const MyTask: TaskItemModel = { ...Task, statement: status } as TaskItemModel;
-    setTask(MyTask);
-   }
+        const MyTask: TaskItemModel = { ...Task, statement: status } as TaskItemModel;
+        setTask(MyTask);
+    }
   }
-
+  */
   const onChangeHandlerDate = (e: { target: { name: string; value: string; }; }) => {
     const { name, value } = e.target;
     const MyTask: TaskItemModel = { ...Task, [name]: value } as TaskItemModel;
@@ -82,7 +82,7 @@ function renderValue(option: SelectOption<string> | null) {
         setOpenSnackbar(true)}
       
       else {
-        setOpenSnackbarBad(true)};
+        setOpenSnackbarBad(true)}
       }
     );}
 
@@ -166,15 +166,15 @@ function renderValue(option: SelectOption<string> | null) {
                                         control={control}
                                         rules={{ required: true }}
                                         render={({ field }) =>
-                                                <Select {...field} value={Task?.statement.toString()} size="sm" placeholder="Состояние" onChange={e=>onChangeStatement(e?.target?.innerText)} >          
+                                            <Select {...field} value={Task?.statement.toString()} size="sm" placeholder="Состояние"
+                                            //                                                onChange={onChangeStatement} 
+                                            >          
                                                 <Option value="1">Не начато</Option>
                                                 <Option value="2">В работе</Option>
                                                 <Option value="3">На проверке</Option>
                                                 <Option value="4">Завершено</Option>
                                                 </Select>} />
                                             </FormControl>
-                                           
-                                          
 
                                             <FormControl sx={{ flexGrow: 1 }}>
                                                 <FormLabel>Ответственный</FormLabel>

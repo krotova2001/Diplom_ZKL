@@ -1,6 +1,6 @@
 //заголовок второго уровня
 
-import { Box, Divider, Typography } from '@mui/joy';
+import { Divider, Typography } from '@mui/joy';
 
 type PropTypes = {
     Header: string

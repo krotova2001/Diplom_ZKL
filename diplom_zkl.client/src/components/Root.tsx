@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box, { BoxProps } from '@mui/joy/Box';
 
 function Root(props: BoxProps) {

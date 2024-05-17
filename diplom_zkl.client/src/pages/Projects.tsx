@@ -1,9 +1,7 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import HeaderTop from '../components/HeaderTop';
-import { List, Sheet, Typography } from '@mui/joy';
+import { List, Typography } from '@mui/joy';
 import { ProjectItem } from '../models/projectitem';
-import userService from "../services/user.service";
-import Endpoints from "../services/endpoints";
 import ProjectItemService from '../services/projectitemservice';
 import ProjectCard from '../components/ProjectCard';
 
@@ -29,7 +27,7 @@ function Projects() {
             }}
           >
             {ProjectList.length==0? <Typography level="body-sm">Здесь пока нет никаких проектов...</Typography> : 
-            ProjectList.map((item:ProjectItem, index: number) => 
+            ProjectList.map((item:ProjectItem) => 
             (
             <ProjectCard id={item.id} title={item.title} description={item.description} userNavigation={item.userNavigation} taskitemNavigation={item.taskitemNavigation} />
             ))}

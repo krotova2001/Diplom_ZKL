@@ -5,7 +5,6 @@ import { AuthProvider } from './context/AuthProvider';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { StyledEngineProvider } from '@mui/joy/styles';
-import LeftBar from './components/LeftBar';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement

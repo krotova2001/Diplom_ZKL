@@ -38,7 +38,13 @@ class AuthService {
     }
 
     getCurrentUser() {
-        return axios.get(Endpoints.API_URL + "users/" + `${JSON.parse(localStorage.getItem('userInfo')).id}`, { headers: authHeader() })
+        if (localStorage.getItem("userInfo")) {
+            return axios.get(Endpoints.API_URL + "users/" + `${JSON.parse(localStorage.getItem('userInfo')).id}`, { headers: authHeader() })
+        }
+        else {
+            return null;
+        }
+        
     }
 
     saveUser(id, user) {
