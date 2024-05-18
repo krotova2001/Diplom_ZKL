@@ -11,6 +11,8 @@ import AssignmentIndRoundedIcon from '@mui/icons-material/AssignmentIndRounded';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import AccountTreeRoundedIcon from '@mui/icons-material/AccountTreeRounded';
 import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
+import { Link } from "react-router-dom";
+
 
 //панель слева
 export default function LeftBar() {
@@ -19,11 +21,11 @@ export default function LeftBar() {
         return (
             <List
                 size="sm"
-                sx={{ '--ListItem-radius': 'var(--joy-radius-sm)', '--List-gap': '4px',marginLeft:'5px' }}
+                sx={{  '--ListItem-radius': 'var(--joy-radius-sm)', '--List-gap': '4px',marginLeft:'5px' }}
             >
                 <ListItem nested>
                     <ListSubheader sx={{ letterSpacing: '2px', fontWeight: '800' }}>
-                        Личная
+                        Личная панель
                     </ListSubheader>
                     <List
                         aria-labelledby="nav-list-browse"
@@ -31,49 +33,64 @@ export default function LeftBar() {
                             '& .JoyListItemButton-root': { p: '8px' },
                         }}
                     >
+                       <Link to="/myteam" style={{ textDecoration: 'none' }}>
                         <ListItem>
                             <ListItemButton selected>
                                 <ListItemDecorator>
                                     <PeopleRoundedIcon fontSize="small" />
                                 </ListItemDecorator>
-                                <ListItemContent>Моя команда</ListItemContent>
+                                <ListItemContent sx={{display: { xs: 'none', md: 'block' }}}>Моя команда</ListItemContent>
                             </ListItemButton>
                         </ListItem>
+                        </Link>
+
+                        <Link to="/MySettings" style={{ textDecoration: 'none' }}>
                         <ListItem>
                             <ListItemButton>
                                 <ListItemDecorator sx={{ color: 'neutral.500' }}>
                                     <AssignmentIndRoundedIcon fontSize="small" />
                                 </ListItemDecorator>
-                                <ListItemContent>Настройки аккаунта</ListItemContent>
+                                <ListItemContent sx={{display: { xs: 'none', md: 'block' }}}>Настройки аккаунта</ListItemContent>
                             </ListItemButton>
                         </ListItem>
+                        </Link>
+
+                        <Link to="/project" style={{ textDecoration: 'none' }}>
                         <ListItem>
                             <ListItemButton>
                                 <ListItemDecorator sx={{ color: 'neutral.500' }}>
                                     <AccountTreeRoundedIcon fontSize="small" />
                                 </ListItemDecorator>
-                                <ListItemContent>Мои проекты</ListItemContent>
+                                <ListItemContent sx={{display: { xs: 'none', md: 'block' }}}>Мои проекты</ListItemContent>
                             </ListItemButton>
                         </ListItem>
+                        </Link>
+
+                        <Link to="/mytasks" style={{ textDecoration: 'none' }}>
                         <ListItem>
                             <ListItemButton>
                                 <ListItemDecorator sx={{ color: 'neutral.500' }}>
                                     <TodayRoundedIcon fontSize="small" />
                                 </ListItemDecorator>
-                                <ListItemContent>Мои задачи</ListItemContent>
+                                <ListItemContent sx={{display: { xs: 'none', md: 'block' }}}>Мои задачи</ListItemContent>
                             </ListItemButton>
                         </ListItem>
+                        </Link>
+
+                        <Link to="/mymessages" style={{ textDecoration: 'none' }}>
                         <ListItem>
                             <ListItemButton>
                                 <ListItemDecorator sx={{ color: 'neutral.500' }}>
                                     <ArticleRoundedIcon fontSize="small" />
                                 </ListItemDecorator>
-                                <ListItemContent>Сообщения</ListItemContent>
+                                <ListItemContent sx={{display: { xs: 'none', md: 'block' }}}>Сообщения</ListItemContent>
                                 <Chip variant="soft" color="warning" size="sm">
                                     2
                                 </Chip>
                             </ListItemButton>
                         </ListItem>
+                        </Link>
+
                     </List>
                 </ListItem>
             </List>

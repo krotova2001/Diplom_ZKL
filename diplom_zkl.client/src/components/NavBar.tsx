@@ -25,7 +25,7 @@ import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import TeamNav from './LeftBar';
+//import TeamNav from './LeftBar';
 import Endpoints from "../services/endpoints";
 import { useEffect, useState } from 'react';
 import authService from '../services/auth.service';
@@ -71,89 +71,7 @@ function NavBar() {
                     margin: '10px',
                 }}
             >
-                <Stack
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={1}
-                    sx={{ display: { xs: 'none', sm: 'flex' } }}
-                >
-                    <IconButton
-                        size="md"
-                        variant="outlined"
-                        color="neutral"
-                        sx={{
-                            display: { xs: 'none', sm: 'inline-flex' },
-                            borderRadius: '50%',
-                          
-                        }}
-                    >
-                        <LanguageRoundedIcon />
-                    </IconButton>
-
-                    <Link to="/">
-                    <Button
-                        variant="plain"
-                        color="neutral"
-                        component="a"
-                        size="sm"
-                        sx={{ alignSelf: 'center' }}
-                    >
-                        Домой
-                    </Button>
-                    </Link>
-
-                    <Link to="/projectlist">
-                    <Button
-                        variant="plain"
-                        color="neutral"
-                        aria-pressed="false"
-                        component="a"
-                        size="sm"
-                        sx={{ alignSelf: 'center' }}
-                    >
-                        Проекты
-                        </Button>
-                    </Link>
-
-                    <Link to="/tasklist">
-                    <Button
-                        variant="plain"
-                        color="neutral"
-                        component="a"
-                        size="sm"
-                        sx={{ alignSelf: 'center' }}
-                    >
-                        Задачи
-                        </Button>
-                    </Link>
-
-                    <Link to="/reports">
-                        <Button
-                            variant="plain"
-                            color="neutral"
-                            component="a"
-                            size="sm"
-                            sx={{ alignSelf: 'center' }}
-                        >
-                            Отчеты
-                        </Button>
-                    </Link>
-
-                    <Link to="/about">
-                        <Button
-                            variant="plain"
-                            color="neutral"
-                            component="a"
-                            size="sm"
-                            sx={{ alignSelf: 'center' }}
-                        >
-                            О проекте
-                        </Button>
-                    </Link>
-
-                </Stack>
-
+               <TopTopBar />
 
                 <Box sx={{ display: { xs: 'inline-flex', sm: 'none' } }}>
                     <IconButton variant="plain" color="neutral" onClick={() => setOpen(true)}>
@@ -165,9 +83,11 @@ function NavBar() {
                         onClose={() => setOpen(false)}
                     >
                         <ModalClose />
-                        <DialogTitle>Acme Co.</DialogTitle>
+                        <DialogTitle>Три толстяка</DialogTitle>
                         <Box sx={{ px: 1 }}>
-                            <TeamNav />
+                            
+                        <TopBarCollapse />
+
                         </Box>
                     </Drawer>
                 </Box>
@@ -309,3 +229,99 @@ function NavBar() {
         return (<></>);
 }
     export default NavBar
+
+    function TopTopBar() {
+        return (<>
+         <Stack
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={1}
+                    sx={{ display: { xs: 'none', sm: 'flex' } }}
+                >
+                    <IconButton
+                        size="md"
+                        variant="outlined"
+                        color="neutral"
+                        sx={{
+                            display: { xs: 'none', sm: 'inline-flex' },
+                            borderRadius: '50%',
+                          
+                        }}
+                    >
+                    <LanguageRoundedIcon />
+                    </IconButton>
+
+                    <TopBarCollapse />
+
+                </Stack>
+
+        </>)
+
+    }
+
+    function TopBarCollapse() {
+        return (<>
+        
+        <Link to="/">
+                    <Button
+                        variant="plain"
+                        color="neutral"
+                        component="a"
+                        size="sm"
+                        sx={{ alignSelf: 'center' }}
+                    >
+                        Домой
+                    </Button>
+                    </Link>
+
+                    <Link to="/projectlist">
+                    <Button
+                        variant="plain"
+                        color="neutral"
+                        aria-pressed="false"
+                        component="a"
+                        size="sm"
+                        sx={{ alignSelf: 'center' }}
+                    >
+                        Проекты
+                        </Button>
+                    </Link>
+
+                    <Link to="/tasklist">
+                    <Button
+                        variant="plain"
+                        color="neutral"
+                        component="a"
+                        size="sm"
+                        sx={{ alignSelf: 'center' }}
+                    >
+                        Задачи
+                        </Button>
+                    </Link>
+
+                    <Link to="/reports">
+                        <Button
+                            variant="plain"
+                            color="neutral"
+                            component="a"
+                            size="sm"
+                            sx={{ alignSelf: 'center' }}
+                        >
+                            Отчеты
+                        </Button>
+                    </Link>
+
+                    <Link to="/about">
+                        <Button
+                            variant="plain"
+                            color="neutral"
+                            component="a"
+                            size="sm"
+                            sx={{ alignSelf: 'center' }}
+                        >
+                            О проекте
+                        </Button>
+                    </Link>
+        </>);
+    }
