@@ -1,4 +1,6 @@
 //класс пользователя
+import { ProjectItem } from './projectitem';
+
 export class User {
     id!: string;
     name: string | undefined;
@@ -12,6 +14,7 @@ export class User {
     biography: string | undefined;
     Country: string | undefined;
     TimeZone: number | undefined = (Math.abs(new Date().getTimezoneOffset()))/60;
+    Projects: ProjectItem[] = [];
 }
 
 export class NewUser extends User {
