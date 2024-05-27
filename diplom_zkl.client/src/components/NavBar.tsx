@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, redirect } from 'react-router-dom'
 import * as React from 'react';
 import useAuth from "../hooks/useAuth";
 import Box from '@mui/joy/Box';
@@ -54,6 +54,7 @@ function NavBar() {
     const [open, setOpen] = React.useState(false);
     const { isAuthenticated } = useAuth();
     const [CurrentUser, setcurrentUser] = useState<User>(); //текущий пользователь
+    const [searchString, setsearchString] = useState('');
 
     useEffect(() => {
         authService.getCurrentUser()?.then(user => {
@@ -101,12 +102,14 @@ function NavBar() {
                     }}
                 >
                     <Input
+                    onChange={(e) => {setsearchString(e.target.value)}}
                         size="sm"
                         variant="outlined"
                         placeholder="Поиск..."
                         startDecorator={<SearchRoundedIcon color="primary" />}
                         endDecorator={
                             <IconButton
+                                onClick={()=>window.open('/search/' + searchString)}
                                 variant="outlined"
                                 color="neutral"
                                 sx={{ bgcolor: 'background.level1' }}
@@ -129,6 +132,7 @@ function NavBar() {
                         variant="outlined"
                         color="neutral"
                         sx={{ display: { xs: 'inline-flex', sm: 'none' }, alignSelf: 'center' }}
+                        
                     >
                         <SearchRoundedIcon />
                     </IconButton>

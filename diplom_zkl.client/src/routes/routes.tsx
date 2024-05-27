@@ -17,6 +17,7 @@ import MyTeam from '../pages/MyTeam';
 import MySettings from '../pages/MySettings';
 import MyTasks from '../pages/MyTasks';
 import MyMessages from '../pages/MyMessages';
+import SearchResult from '../pages/SearchResult';
 
 export const useRoutes = () => {
     return (
@@ -39,6 +40,10 @@ export const useRoutes = () => {
                 <Route path='/MySettings' element={<MySettings />} />
                 <Route path='/mytasks' element={<MyTasks />} />
                 <Route path='/mymessages' element={<MyMessages />} />
+                <Route path='/search/' element={<SearchResult />} >
+                    <Route index element={<SearchResult />} />
+                    <Route path=":query" element={<SearchResult />} />
+                </ Route>
             </Route>
         </Routes>
     )
