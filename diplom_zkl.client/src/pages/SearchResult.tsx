@@ -9,11 +9,9 @@ import BookmarkAdd from '@mui/icons-material/BookmarkAddOutlined';
 import { AspectRatio, Button, Sheet, Stack } from '@mui/joy';
 import { useState } from 'react';
 
-
 function SearchResult() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-
   const  params  = useParams();
   const str = params['query'];
 
