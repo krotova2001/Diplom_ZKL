@@ -105,7 +105,7 @@ function NavBar() {
                     onChange={(e) => {setsearchString(e.target.value)}}
                         size="sm"
                         variant="outlined"
-                        placeholder="Поиск..."
+                        placeholder="Введите английское слово"
                         startDecorator={<SearchRoundedIcon color="primary" />}
                         endDecorator={
                             <IconButton
