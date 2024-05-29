@@ -8,7 +8,6 @@ import Typography from '@mui/joy/Typography';
 import BookmarkAdd from '@mui/icons-material/BookmarkAddOutlined';
 import { AspectRatio, Button, Sheet, Stack } from '@mui/joy';
 import { useState } from 'react';
-import { DisplaySettings } from '@mui/icons-material';
 
 
 function SearchResult() {
