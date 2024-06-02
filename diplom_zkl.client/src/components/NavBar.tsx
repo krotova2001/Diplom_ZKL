@@ -1,4 +1,5 @@
-import { Link, NavLink, redirect } from 'react-router-dom'
+/* eslint-disable no-constant-condition */
+import { Link, NavLink } from 'react-router-dom'
 import * as React from 'react';
 import useAuth from "../hooks/useAuth";
 import Box from '@mui/joy/Box';

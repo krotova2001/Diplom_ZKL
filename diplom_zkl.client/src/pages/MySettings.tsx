@@ -3,10 +3,12 @@ import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import FormHelperText from '@mui/joy/FormHelperText';
 import Switch from '@mui/joy/Switch';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Snackbar, VariantProp } from '@mui/joy';
-import { Divider, Typography } from '@mui/material';
+import { Divider } from '@mui/material';
 import Slider from '@mui/joy/Slider';
+import utilsService from '../services/utils.service';
+import Typography from '@mui/joy/Typography';
 
 function MySettings() {
   const [checked, setChecked] = useState<boolean>(true);
@@ -14,8 +16,15 @@ function MySettings() {
   const [checked2, setChecked2] = useState<boolean>(false);
   const [checked3, setChecked3] = useState<boolean>(false);
   const [variant, setVariant] = useState<VariantProp>('solid');
+  const [currentWeather, setCurrentWeather]  = useState<String>();
   const [openSnackbar, setOpenSnackbar] = useState(false); //всплывашка справа
   
+  useEffect(() => {
+    utilsService.getCurrentWeather().then((res) => {
+      setCurrentWeather(res.data.main.temp);
+    });
+  }, []);
+
   const marks = [
     {
       value: 0,
@@ -35,7 +44,8 @@ function MySettings() {
     },
   ];
   
-  function valueText(value: number) {
+    function valueText(value: number) {
+        setVariant("solid");
     return `${value}°C`;
   }
   return (
@@ -52,7 +62,7 @@ function MySettings() {
     marginTop: '1rem'
     
     }}>
-        <Typography variant='h6'>Уведомления</Typography>
+        <Typography level='h4'>Уведомления</Typography>
         <Divider sx={{ mb: 1 }} />
 
 
@@ -146,7 +156,7 @@ function MySettings() {
     marginTop: '1rem'
     
     }}>
-        <Typography variant='h6'>Конфиденциальность</Typography>
+        <Typography level='h4'>Конфиденциальность</Typography>
         <Divider sx={{ mb: 1 }} />
         <FormControl
       orientation="horizontal"
@@ -185,7 +195,7 @@ function MySettings() {
     marginTop: '1rem'
     
     }}>
-        <Typography variant='h6'>Прочее</Typography>
+        <Typography level='h4'>Прочее</Typography>
         <Divider sx={{ mb: 1 }} />
         <FormControl
       orientation="horizontal"
@@ -194,6 +204,7 @@ function MySettings() {
        <Box sx={{ mt: '3em' }}>
         <FormLabel>Температура на улице</FormLabel>
         <FormHelperText sx={{ mt: 0 }}>При которой замораживаются все задачи</FormHelperText>
+        {currentWeather == undefined ? ''  : <Typography variant="outlined" color="success" level="body-sm">Текущая температура {currentWeather}</Typography>  }
       </Box>
       <Box sx={{ mx: 'auto', height: 200 }}>
       <Slider

@@ -1,9 +1,9 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import HeaderTop from '../components/HeaderTop';
 import userService from "../services/user.service";
 import { useEffect, useState } from 'react';
 import { User } from '../models/user';
-import { TaskItemModel } from '../models/taskitem';
 import { Avatar, Box, Divider, List, ListItem, ListItemContent, ListItemDecorator, Sheet, Typography } from '@mui/joy';
 import { GuidGenerator } from './Utils/GuidGenerator';
 import Endpoints from '../services/endpoints';

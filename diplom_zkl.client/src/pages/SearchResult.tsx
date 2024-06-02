@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import HeaderTop from '../components/HeaderTop';
 import { useParams } from 'react-router';
 import NasaSearch from '../services/search';
@@ -6,7 +7,7 @@ import CardContent from '@mui/joy/CardContent';
 import IconButton from '@mui/joy/IconButton';
 import Typography from '@mui/joy/Typography';
 import BookmarkAdd from '@mui/icons-material/BookmarkAddOutlined';
-import { AspectRatio, Button, Sheet, Stack } from '@mui/joy';
+import { AspectRatio, Button } from '@mui/joy';
 import { useState } from 'react';
 
 function SearchResult() {
@@ -17,7 +18,10 @@ function SearchResult() {
 
   NasaSearch.search(str).then((res) => {
     setItems(res.data.collection.items);
+    if (items.length>0){
     setIsLoaded(true);
+    console.log(items);
+    }
     } );
 
   return (
@@ -26,10 +30,9 @@ function SearchResult() {
     <Typography level='title-lg'>Вы искали: "{str}"</Typography>
     <Typography level='body-sm'>Так как поиск мы не доделали, предлагаем вам результаты запроса по вашему слову в базе данных изображений NASA<br/></Typography>
     <div style={{display: "flex", flexDirection: "row", flexWrap:"wrap"}}>
-  {(!isLoaded||items.length==0)? <Typography level="body-sm">Загружаю...</Typography>:
-  items.map((item:any, index:number) => (
-    
-    
+
+  {(!isLoaded||items.length==0||items === undefined) ? <Typography level="body-sm">Загружаю...</Typography>:
+    items.map((item:any) => (
     <Card sx={{ width: 320, margin: '0.5rem' }}>
         <div>
           <Typography level="title-lg">{item.data[0].title}</Typography>
@@ -46,8 +49,8 @@ function SearchResult() {
         </div>
         <AspectRatio minHeight="120px" maxHeight="200px">
           <img
-            src={item.links[0].href}
-            srcSet={item.links[0].href}
+            src={item?.links[0].href}
+            srcSet={item?.links[0].href}
             loading="lazy"
             alt="" />
         </AspectRatio>
