@@ -5,16 +5,34 @@ import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 import { ProjectItem } from '../../models/projectitem';
 import ProjectItemService from '../../services/projectitemservice';
 import { SetStateAction, useEffect, useState } from 'react';
+import { BarChart } from '@mui/x-charts/BarChart';
+import { User } from '../../models/user';
+import userService from '../../services/user.service';
+
+type DataSet =
+{
+  name: string | undefined;
+  value: number | undefined;
+}
 
  function ProjectReports() {
     const [ProjectList, setProjectList] = useState<ProjectItem[]>([]);
+    const [allUsers, setallUsers] = useState<User[]>([]); //таблица пользователей
+    //const [data, setData]  = useState<DataSet[]>([]);
+  let data: DataSet[] = [];
     useEffect(() => {
         ProjectItemService.getAllProjects().then((res: { data: SetStateAction<ProjectItem[]>; }) => {
           setProjectList(res.data);
-          console.log(res.data);
         });
+        userService.getAllUsers().then(result => {
+          setallUsers(result.data);
+        });
+        
       }, []);
       
+      allUsers.map((item:User)=>(
+        data.push({ name: item.name, value: item.name?.length  })));
+
     return (
         <>
         <Typography level='h4'> Выполнение проектов </Typography>
@@ -52,7 +70,21 @@ import { SetStateAction, useEffect, useState } from 'react';
                 
         ))}
         <Divider />
-
+<Stack
+spacing={5}
+> 
+<Typography level='h4'> Задействованность пользователей в проектах </Typography>
+<BarChart
+      yAxis={[{ scaleType: 'band', dataKey: 'name'}]} 
+      layout="horizontal"
+      dataset={data}
+      series={[{ dataKey: 'value', label: 'кол-во задач'}]}
+      width={500}
+      height={300}
+      colors={['lightblue']}
+    />
+<Divider />
+</Stack>
         <Stack
         marginTop={5}
             direction="row"
