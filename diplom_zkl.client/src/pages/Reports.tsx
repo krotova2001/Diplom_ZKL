@@ -4,6 +4,8 @@ import Tab from '@mui/material/Tab';
 import { Box, Typography } from '@mui/joy';
 import { useState } from 'react';
 import ProjectReports from  '../components/Reports/ProjectReports';
+import TaskReports from  '../components/Reports/TaskReports';
+import UserReport from  '../components/Reports/UserReport';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -42,7 +44,7 @@ function a11yProps(index: number) {
 function Reports() {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -61,10 +63,10 @@ function Reports() {
     <ProjectReports/>
     </CustomTabPanel>
     <CustomTabPanel value={value} index={1}>
-      тут Задачи
+      <TaskReports/>
     </CustomTabPanel>
     <CustomTabPanel value={value} index={2}>
-      тут Пользователи
+    <UserReport />
     </CustomTabPanel>
   </Box>
   </>

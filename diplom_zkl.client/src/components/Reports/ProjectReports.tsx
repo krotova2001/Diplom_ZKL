@@ -16,7 +16,7 @@ type DataSet =
 }
 
  function ProjectReports() {
-    const [ProjectList, setProjectList] = useState<ProjectItem[]>([]);
+    const [ProjectList, setProjectList] = useState<ProjectItem[]>([]); 
     const [allUsers, setallUsers] = useState<User[]>([]); //таблица пользователей
     //const [data, setData]  = useState<DataSet[]>([]);
   let data: DataSet[] = [];
@@ -43,8 +43,14 @@ type DataSet =
             justifyContent="flex-start"
             alignItems="center"
             spacing={2}
+            margin={2}
             >
-                <Box width={200}>
+                <Box width={200}
+                border={0.5}
+                borderRadius={5}
+                padding={1}
+                borderColor={'lightgray'}
+                >
                 <Typography level="body-md" >
                 {item.title}
                 </Typography>
@@ -71,7 +77,7 @@ type DataSet =
         ))}
         <Divider />
 <Stack
-spacing={5}
+spacing={3}
 > 
 <Typography level='h4'> Задействованность пользователей в проектах </Typography>
 <BarChart
@@ -80,13 +86,13 @@ spacing={5}
       dataset={data}
       series={[{ dataKey: 'value', label: 'кол-во задач'}]}
       width={500}
-      height={300}
+      height={250}
       colors={['lightblue']}
     />
 <Divider />
 </Stack>
         <Stack
-        marginTop={5}
+        marginTop={4}
             direction="row"
             justifyContent="flex-start"
             alignItems="center"
@@ -100,7 +106,7 @@ spacing={5}
       cornerRadius="50%"
       sx={(theme) => ({
         [`& .${gaugeClasses.valueText}`]: {
-          fontSize: 40,
+          fontSize: 30,
         },
         [`& .${gaugeClasses.valueArc}`]: {
           fill: '#52b202',
