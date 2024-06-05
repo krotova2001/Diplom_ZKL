@@ -1,27 +1,144 @@
-import { useEffect, useState } from 'react';
-import { User } from '../../models/user';
-import userService from "../../services/user.service";
 
-import { DataGrid } from '@mui/x-data-grid';
+import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
+import {
+    DataGrid,
+    GRID_STRING_COL_DEF,
+    GridColDef,
+    GridColTypeDef,
+    GridRenderCellParams,
+    GridRowsProp,
+  } from '@mui/x-data-grid';
+
+
+
+  type SparkLineChartProps = React.ComponentProps<typeof SparkLineChart>;
+
+  function GridSparklineCell(
+    props: GridRenderCellParams & {
+      plotType?: SparkLineChartProps['plotType'];
+    },
+  ) {
+    if (props.value == null) {
+      return null;
+    }
+  
+    return (
+      <SparkLineChart
+        data={props.value}
+        width={props.colDef.computedWidth}
+        plotType={props.plotType}
+      />
+    );
+  }
+
+  const sparklineColumnType: GridColTypeDef<number[]> = {
+    ...GRID_STRING_COL_DEF,
+    type: 'custom',
+    resizable: false,
+    filterable: false,
+    sortable: false,
+    editable: false,
+    groupable: false,
+    renderCell: (params) => <GridSparklineCell {...params} />,
+  };
 
 function UserReport() {
-    const [allUsers, setallUsers] = useState<User[]>([]); //таблица пользователей
+    const rows2: GridRowsProp = [
+{ id:1,
+    col1:'Чушпан',
+    col2:'Пэхэпэшный',
+    col3:'none',
+    monthlyDownloads: [
+    469172, 488506, 592287, 617401, 640374, 632751, 668638, 807246, 749198, 944863,
+    911787, 844815, 992022, 1143838, 1446926, 1267886, 1362511, 1348746, 1560533,
+    1670690, 1695142, 1916613, 1823306, 1683646, 2025965, 2529989, 3263473,
+    3296541, 3041524, 2599497, 2719473, 2610351, 2912067, 3079330, 2871077,
+    2684197, 2852679, 3227844, 3867488, 3582735, 3454135, 3799207, 3813848,
+    3839009, 4054869, 4319042, 4388671, 4149743, 4519686, 4810266, 5621007,
+    5260194, 5563038, 5837767, 5342797, 6427653, 6611624, 6532709, 6886198,
+    6071253, 6730371, 7097963, 8001343, 6867713, 7688481,
+  ],
+  monthlyDownloadsBar: [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    557488, 1341471, 2044561, 2206438, 2682543, 2772941, 2987705, 3264829, 2972821,
+    3489759, 3698191, 4410492, 4201780, 4892509,
+  ],
+},
+{id:2,
+    col1:'Кротов',
+    col2:'Георгий',
+    col3:'zvuk24@gmail.com',
+    monthlyDownloads: [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    557488, 1341471, 2044561, 2206438, 2682543, 2772941, 2987705, 3264829, 2972821,
+    3489759, 3698191, 4410492, 4201780, 4892509,
+  ],
+  monthlyDownloadsBar: [
+    474506, 514529, 624998, 634955, 693156, 762051, 822194, 999794, 1028527,
+    1264039, 1074500, 874769, 945614, 841453, 859657, 822025, 886668, 810302,
+    849949, 872377, 783857, 887114, 789091, 698810, 800283, 789543, 919445,
+    1026095, 1130903, 1021922, 971668, 922021, 875551, 849529, 891653, 806460,
+    740611, 804504, 1008750, 1080174, 917512, 886872, 874670, 853764, 862825,
+    894367, 919854, 807459, 858222, 858151, 967551, 897111, 902405, 944057, 879880,
+    1090124, 1081206, 1026493, 1002294, 832895, 955662, 972831, 1166432, 1042367,
+    1025499,
+  ],
+},
+{ id:3,
+    col1:'Тест',
+    col2:'Григорий',
+    col3:'123@gmail.com',
+    monthlyDownloads: [
+    166896, 190041, 248686, 226746, 261744, 271890, 332176, 381123, 396435, 495620,
+    520278, 460839, 704158, 559134, 681089, 712384, 765381, 771374, 851314, 907947,
+    903675, 1049642, 1003160, 881573, 1072283, 1139115, 1382701, 1395655, 1355040,
+    1381571, 1495175, 1513409, 1673240, 1772826, 1712051, 1641944, 1718714,
+    1849475, 2226745, 2104910, 1967886, 2096636, 1991424, 2155674, 2263360,
+    2261195, 2324734, 2075858, 2297512, 2368925, 2886678, 2543833, 2835623,
+    2916036, 2638289, 3050516, 2950882, 3042688, 3290024, 2790747, 3196521,
+    3146755, 3562973, 3082832, 3477021,
+  ],
+  monthlyDownloadsBar: [
+    49274, 48553, 64322, 58823, 59113, 66912, 70695, 74530, 66425, 84803, 86193,
+    69178, 94987, 89205, 105340, 98078, 112268, 111998, 122224, 127661, 133198,
+    138867, 128836, 120011, 158852, 154510, 175291, 197496, 224817, 194683, 220130,
+    210720, 233037, 252119, 240970, 233944, 256490, 298853, 340486, 318831, 317291,
+    335995, 336665, 343706, 356435, 376861, 379366, 355358, 408157, 425652, 499923,
+    471759, 512219, 511044, 470863, 531581, 534128, 531059, 613792, 527997, 594540,
+    637346, 788377, 721212, 644692,
+  ],
+}
+    ];
 
-  
+      const columns: GridColDef[] = [
+        { field: 'col1', headerName: 'Имя', width: 150 },
+        { field: 'col2', headerName: 'Фамилия', width: 150 },
+        { field: 'col3', headerName: 'Почта', width: 180 },
+         {
+            field: 'monthlyDownloads',
+            ...sparklineColumnType,
+            headerName: 'Активность',
+            width: 150,
+          },
+          {
+            field: 'monthlyDownloadsBar',
+            ...sparklineColumnType,
+            headerName: 'Эффективность',
+            renderCell: (params) => <GridSparklineCell {...params} plotType="bar" />,
+            width: 150,
+           
+          },
+         ];
 
-//загрузить таблицу юзеров
-useEffect(() => {
-    userService.getAllUsers().then(result => {
-        setallUsers(result.data);
-    })});
+
 
     return (
-
         <>
-        
         <div style={{ height: 300, width: '100%' }}>
-      
-    </div>
+            <DataGrid rows={rows2} columns={columns} />
+        </div>
         </>
     )
 }
