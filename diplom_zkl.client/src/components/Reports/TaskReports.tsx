@@ -1,4 +1,4 @@
-import { Box, Checkbox, Stack } from '@mui/joy';
+import { Box, Stack } from '@mui/joy';
 import { Typography } from '@mui/joy';
 import { Divider } from '@mui/joy';
 import { SetStateAction, useEffect, useState } from 'react';
@@ -20,7 +20,8 @@ function TaskReports() {
     useEffect(() => {
         TaskItemsService.getAllTasks().then((res: { data: SetStateAction<TaskItemModel[]>; }) => {
           setTaskList(res.data);
-          console.log(res.data);
+            console.log(res.data);
+            console.log(TaskList);
         });
       }, []);
 
